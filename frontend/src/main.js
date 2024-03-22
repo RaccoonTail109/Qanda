@@ -2,70 +2,66 @@ import { BACKEND_PORT } from './config.js';
 // A helper you may want to use when uploading new images to the server.
 import { fileToDataUrl } from './helpers.js';
 
-// 获取所有的页面元素
-const homePage = document.getElementById('homePage');
-const threadPage = document.getElementById('threadPage');
-const userPage = document.getElementById('userPage');
-const loginContainer = document.getElementById('loginContainer');
-const mainContainer = document.getElementById('mainContainer');
+function login() {
+    location.hash = "#/home";
+}
+document.getElementById('loginButton').addEventListener('click', login);
 
-// 获取登录按钮和导航条中的登录链接
-const loginButton = document.getElementById('login');
-const loginLink = document.querySelector('a[href="#/login"]');
-
-// 显示页面函数
-function showPage(pageElement) {
-    // 隐藏所有页面
+function showMainPage(targetPage) {
+    const mainPage = document.getElementById('mainContainer');
+    const loginPage = document.getElementById('loginContainer');
+    // show the main page and hide the login page
+    mainPage.classList.remove('hidden');
+    loginPage.classList.add('hidden');
+    //show the target page
+    const targetPageElement = document.querySelector(`#${targetPage}Page`);
+    const homePage = document.getElementById('homePage');
+    const threadPage = document.getElementById('threadPage');
+    const userPage = document.getElementById('userPage');
+    // hide all pages
     homePage.classList.add('hidden');
     threadPage.classList.add('hidden');
     userPage.classList.add('hidden');
-    loginContainer.classList.add('hidden');
-    mainContainer.classList.remove('hidden');
-
-    // 显示指定页面
-    pageElement.classList.remove('hidden');
+    // show the target page
+    targetPageElement.classList.remove('hidden');
 }
 
-// 处理导航条点击事件函数
-function handleNavClick(event) {
-    if (event.target.tagName === 'A') {
-        event.preventDefault();
-        const hash = event.target.getAttribute('href');
+function showLoginPage() {
+    //show the login page and hide the main page
+    const mainPage = document.getElementById('mainContainer');
+    const loginPage = document.getElementById('loginContainer');
+    mainPage.classList.add('hidden');
+    loginPage.classList.remove('hidden');
+}
 
-        switch (hash) {
-            case '#/home':
-                showPage(homePage);
-                break;
-            case '#/thread':
-                showPage(threadPage);
-                break;
-            case '#/user':
-                showPage(userPage);
-                break;
-            case '#/login':
-                showPage(loginContainer);
-                mainContainer.classList.add('hidden');
-                break;
-        }
+window.addEventListener('hashchange', function () {
+    if (
+        window.location.hash === '#/login' ||
+        window.location.hash === '#/register'
+    ) {
+        //load the login page
+        showLoginPage();
+    } else if (window.location.hash === '' || window.location.hash === '#/home') {
+        showMainPage('home');
     }
-}
-
-// 处理登录按钮点击事件函数
-function handleLoginClick() {
-    showPage(homePage);
-    loginLink.classList.add('hidden');
-}
-
-// 初始化函数
-function init() {
-    // 默认显示主页
-    showPage(homePage);
-
-    // 添加事件监听器
-    document.querySelector('nav').addEventListener('click', handleNavClick);
-    loginButton.addEventListener('click', handleLoginClick);
-}
-
-// 调用初始化函数
-init();
-
+    else {
+        //load the target page
+        const targetPage = window.location.hash.split('/')[1];
+        showMainPage(targetPage);
+    }
+});
+window.addEventListener('load', function () {
+    if (
+        window.location.hash === '#/login' ||
+        window.location.hash === '#/register'
+    ) {
+        //load the login page
+        showLoginPage();
+    } else if (window.location.hash === '' || window.location.hash === '#/home') {
+        showMainPage('home');
+    } else {
+        //load the target page
+        const targetPage = window.location.hash.split('/')[1];
+        showMainPage(targetPage);
+    }
+});
