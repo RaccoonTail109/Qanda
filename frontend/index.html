@@ -8,62 +8,100 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- You can add your styles and scripts here -->
         <link rel="stylesheet" type="text/css" media="screen" href="styles/global.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="styles/loginPage.css" />
     </head>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .fullPage {
-            width: 100%;
-            height: 95%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        nav {
-            width: 100%;
-            height: 40px;
-            background-color: aqua;
-        }
-
-        footer {
-            width: 100%;
-            height: 40px;
-            background-color: aqua;
-        }
-
-        nav ul {
-            display: flex;
-        }
-
-        ul li {
-            list-style: none;
-            margin-right: 20px;
-        }
-
-        main {
-            flex: 1;
-        }
-
-        .page {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
 
     <body>
         <section id="loginContainer" class="fullPage hidden">
-            <div>login:
-                <button id="loginButton">login</button>
+            <div id="loginPage" class="login-registerPage">
+                <div class="login-registerBox">
+                    <div class='onlyLoginBox' id="onlyLoginBox">
+                        <div class="login-registerTitle">Welcome Back</div>
+                        <form id='loginForm'>
+                            <div class="emailInputRow">
+                                <svg t="1711118362522" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg" p-id="4225" width="24" height="24">
+                                    <path
+                                        d="M926.47619 355.644952V780.190476a73.142857 73.142857 0 0 1-73.142857 73.142857H170.666667a73.142857 73.142857 0 0 1-73.142857-73.142857V355.644952l304.103619 257.828572a170.666667 170.666667 0 0 0 220.745142 0L926.47619 355.644952zM853.333333 170.666667a74.044952 74.044952 0 0 1 26.087619 4.778666 72.704 72.704 0 0 1 30.622477 22.186667 73.508571 73.508571 0 0 1 10.678857 17.67619c3.169524 7.509333 5.12 15.652571 5.607619 24.210286L926.47619 243.809524v24.380952L559.469714 581.241905a73.142857 73.142857 0 0 1-91.306666 2.901333l-3.632762-2.925714L97.52381 268.190476v-24.380952a72.899048 72.899048 0 0 1 40.155428-65.292191A72.97219 72.97219 0 0 1 170.666667 170.666667h682.666666z"
+                                        p-id="4226" fill="#dbdbdb"></path>
+                                </svg>
+                                <input class="emailInput" type="email" id="loginEmail" name="email"
+                                    placeholder="Your email" required>
+                            </div>
+                            <div class="passwordInputRow">
+                                <svg t="1711119169956" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg" p-id="5336" width="24" height="24">
+                                    <path
+                                        d="M780.8 354.58H665.6v-42.89c0-72.31-19.85-193.3-153.6-193.3-138.87 0-153.6 135.05-153.6 193.3v42.89H243.2v-42.89C243.2 122.25 348.79 0 512 0s268.8 122.25 268.8 311.69v42.89z m-192 314.84c0-43.52-34.58-78.65-76.8-78.65s-76.8 35.13-76.8 78.65c0 29.46 15.4 54.47 38.44 67.82v89.64c0 21.74 17.25 39.7 38.4 39.7s38.4-17.96 38.4-39.7v-89.64c23-13.35 38.36-38.36 38.36-67.82zM896 512v393.61c0 65.26-51.87 118.39-115.2 118.39H243.2c-63.291 0-115.2-53.13-115.2-118.39V512c0-65.22 51.87-118.39 115.2-118.39h537.6c63.33 0 115.2 53.17 115.2 118.39z"
+                                        fill="#dbdbdb" p-id="5337"></path>
+                                </svg>
+                                <input class="passwordInput" type="password" id="loginPassword" name="password"
+                                    placeholder="Password" required>
+                            </div>
+                            <div class="rMeandForgetpword">
+                                <div class="rMe">
+                                    <input type="checkbox" id="remeberMe" name="remeberMe" value="remeberMe">
+                                    <label for="remeberMe">Remeber me</label>
+                                </div>
+                                <div class="fPword">
+                                    <button class="forgetPword" id="forgetPasswordButton">Forget Password?</button>
+                                </div>
+                            </div>
+                            <div class="submitButtonContainer">
+                                <input id="loginButton" type="submit" value="Login" class="loginButton">
+                            </div>
+                        </form>
+                        <div class="registerNav" id="registerNav">
+                            <div class="loginNavMargin">Don't have an account?</div>
+                            <button id="goRegisterButton" class="goRegisterButton">
+                                Register
+                            </button>
+                        </div>
+                    </div>
+                    <div class='onlyRegisterBox hidden' id="onlyRegisterBox">
+                        <div class="login-registerTitle">Register Qanda</div>
+                        <form id="registerForm">
+                            <div class="registerEmailInputRow">
+                                <svg t="1711118362522" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg" p-id="4225" width="24" height="24">
+                                    <path
+                                        d="M926.47619 355.644952V780.190476a73.142857 73.142857 0 0 1-73.142857 73.142857H170.666667a73.142857 73.142857 0 0 1-73.142857-73.142857V355.644952l304.103619 257.828572a170.666667 170.666667 0 0 0 220.745142 0L926.47619 355.644952zM853.333333 170.666667a74.044952 74.044952 0 0 1 26.087619 4.778666 72.704 72.704 0 0 1 30.622477 22.186667 73.508571 73.508571 0 0 1 10.678857 17.67619c3.169524 7.509333 5.12 15.652571 5.607619 24.210286L926.47619 243.809524v24.380952L559.469714 581.241905a73.142857 73.142857 0 0 1-91.306666 2.901333l-3.632762-2.925714L97.52381 268.190476v-24.380952a72.899048 72.899048 0 0 1 40.155428-65.292191A72.97219 72.97219 0 0 1 170.666667 170.666667h682.666666z"
+                                        p-id="4226" fill="#dbdbdb"></path>
+                                </svg>
+                                <input type="email" id="registerEmail" class="emailInput" placeholder="Your email"
+                                    required>
+                            </div>
+                            <div class="passwordInputRow">
+                                <svg t="1711119169956" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg" p-id="5336" width="24" height="24">
+                                    <path
+                                        d="M780.8 354.58H665.6v-42.89c0-72.31-19.85-193.3-153.6-193.3-138.87 0-153.6 135.05-153.6 193.3v42.89H243.2v-42.89C243.2 122.25 348.79 0 512 0s268.8 122.25 268.8 311.69v42.89z m-192 314.84c0-43.52-34.58-78.65-76.8-78.65s-76.8 35.13-76.8 78.65c0 29.46 15.4 54.47 38.44 67.82v89.64c0 21.74 17.25 39.7 38.4 39.7s38.4-17.96 38.4-39.7v-89.64c23-13.35 38.36-38.36 38.36-67.82zM896 512v393.61c0 65.26-51.87 118.39-115.2 118.39H243.2c-63.291 0-115.2-53.13-115.2-118.39V512c0-65.22 51.87-118.39 115.2-118.39h537.6c63.33 0 115.2 53.17 115.2 118.39z"
+                                        fill="#dbdbdb" p-id="5337"></path>
+                                </svg>
+                                <input type="password" id="registerPassword" class="passwordInput"
+                                    placeholder="Password" required>
+                            </div>
+                            <div class="passwordInputRow">
+                                <svg t="1711121439629" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg" p-id="7217" width="24" height="24">
+                                    <path
+                                        d="M524.55184308 578.6117613c207.85106489 0.62137837 372.08136818 13.04894578 372.08136817 237.67722667 0 52.5064723-8.94784853 107.68487158-25.3522375 161.68265198H123.14141582a562.28528735 562.28528735 0 0 1-25.41437534-161.68265198c0-224.62828089 164.29244112-237.0558483 372.14350601-237.67722667zM497.21119478 45.96622222a221.89421605 221.89421605 0 1 1 0 443.85056996 221.89421605 221.89421605 0 0 1 0-443.85056996z"
+                                        p-id="7218" fill="#dbdbdb"></path>
+                                </svg>
+                                <input type="text" id="registerUsername" class="passwordInput" placeholder="Username">
+                            </div>
+                            <div class="submitButtonContainer">
+                                <input id="registerButton" type="submit" value="Register" class="loginButton">
+                            </div>
+                        </form>
+                        <div class='loginNav' id="loginNav">
+                            <div class="loginNavMargin">Already have an account?</div>
+                            <button id="backLoginButton" class="backLoginButton">
+                                Sign in
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         <section id="mainContainer" class="fullPage">
@@ -79,12 +117,13 @@
                 <div id="homePage" class="page">Home页面</div>
                 <div id="threadPage" class="page hidden">Thread页面</div>
                 <div id="userPage" class="page hidden">User页面</div>
+                <footer id="footer">
+                    <p>&copy; qanda.com 2024</p>
+                </footer>
             </main>
         </section>
-        <footer>
-            <p>&copy; qanda.com 2022</p>
-        </footer>
         <script type="module" src="src/main.js"></script>
+        <script type="module" src="src/loginRegister.js"></script>
     </body>
 
 </html>

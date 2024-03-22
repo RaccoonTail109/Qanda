@@ -2,17 +2,14 @@ import { BACKEND_PORT } from './config.js';
 // A helper you may want to use when uploading new images to the server.
 import { fileToDataUrl } from './helpers.js';
 
-function login() {
-    location.hash = "#/home";
-}
-document.getElementById('loginButton').addEventListener('click', login);
-
 function showMainPage(targetPage) {
     const mainPage = document.getElementById('mainContainer');
     const loginPage = document.getElementById('loginContainer');
+    const footer = document.querySelector('#footer');
     // show the main page and hide the login page
     mainPage.classList.remove('hidden');
     loginPage.classList.add('hidden');
+    footer.classList.remove('hidden');
     //show the target page
     const targetPageElement = document.querySelector(`#${targetPage}Page`);
     const homePage = document.getElementById('homePage');
@@ -30,8 +27,10 @@ function showLoginPage() {
     //show the login page and hide the main page
     const mainPage = document.getElementById('mainContainer');
     const loginPage = document.getElementById('loginContainer');
+    const footer = document.querySelector('#footer');
     mainPage.classList.add('hidden');
     loginPage.classList.remove('hidden');
+    footer.classList.add('hidden');
 }
 
 window.addEventListener('hashchange', function () {
