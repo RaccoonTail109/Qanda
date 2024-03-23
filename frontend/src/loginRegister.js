@@ -16,44 +16,53 @@ function login() {
         email,
         password,
     };
-    fetch("http://localhost:5005/auth/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('login success:', data);
-        });
-    // location.hash = "#/home";
+    window.http.post("/auth/login", data)
+        .then(response => {
+            console.log('login success:', response);
+            location.hash = "#/home";
+        })
+        .catch(error => { console.error('Error:', error) });
+
 }
 loginForm.addEventListener('submit', login);
 
-//? 为什么这里成功注册后database.json里没有username?
 function register() {
     event.preventDefault();
     const email = document.getElementById('registerEmail').value;
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+    //* validate email
+    if (!emailPattern.test(email)) {
+        alert('Enter a valid email address.');
+        return;
+    }
+
     const password = document.getElementById('registerPassword').value;
-    const username = document.getElementById('registerUsername').value;
+    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+    //* validate password
+    if (password !== confirmPassword) {
+        alert('Password and confirm password do not match, please try again.');
+        return;
+    }
+
+    const name = document.getElementById('registerUsername').value;
+    //* validate username
+    if (name.length < 1 || name.length > 20) {
+        alert('Enter a valid username between 1 and 20 characters.');
+        return;
+    }
     const data = {
         email,
         password,
-        username,
+        name,
     };
-    fetch("http://localhost:5005/auth/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('register success:', data);
-        });
-    // location.hash = "#/home";
+    window.http.post("/auth/register", data)
+        .then(response => {
+            console.log('register success:', response);
+            location.hash = "#/home";
+        })
+        .catch(error => { console.error('Error:', error) });
 }
 registerForm.addEventListener('submit', register);
 

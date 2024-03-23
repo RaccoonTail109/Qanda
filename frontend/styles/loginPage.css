@@ -1,3 +1,5 @@
+/* todo: 加上响应式页面，让页面适应不同的屏幕大小 */
+
 * {
     margin: 0;
     padding: 0;
@@ -61,7 +63,7 @@
 
 .emailInputRow {
     width: 100%;
-    border-bottom: white 2px solid;
+    border-bottom: #dbdbdb 2px solid;
     display: flex;
     padding-bottom: 5px;
     padding-left: 9px;
@@ -75,23 +77,24 @@
     border: none;
     width: 100%;
     margin-left: 15px;
+    color: #dbdbdb;
     font-size: 18px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .registerEmailInputRow {
     width: 100%;
-    border-bottom: white 2px solid;
+    border-bottom: #dbdbdb 2px solid;
     display: flex;
     padding-bottom: 5px;
     padding-left: 9px;
     flex-direction: row;
-    margin-top: 130px;
+    margin-top: 60px;
 }
 
 .passwordInputRow {
     width: 100%;
-    border-bottom: white 2px solid;
+    border-bottom: #dbdbdb 2px solid;
     display: flex;
     padding-bottom: 5px;
     padding-left: 9px;

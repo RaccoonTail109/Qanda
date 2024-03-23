@@ -33,10 +33,18 @@ function showLoginPage() {
     footer.classList.add('hidden');
 }
 
+function hideLoadingPage() {
+    const loadingPage = document.getElementById('loadingIconPage');
+    loadingPage.style.display = 'none';
+}
+function showLoadingPage() {
+    const loadingPage = document.getElementById('loadingIconPage');
+    loadingPage.style.display = 'block';
+}
+
 window.addEventListener('hashchange', function () {
     if (
-        window.location.hash === '#/login' ||
-        window.location.hash === '#/register'
+        window.location.hash === '#/login'
     ) {
         //load the login page
         showLoginPage();
@@ -49,10 +57,11 @@ window.addEventListener('hashchange', function () {
         showMainPage(targetPage);
     }
 });
+
 window.addEventListener('load', function () {
+    setTimeout(hideLoadingPage, 500);
     if (
-        window.location.hash === '#/login' ||
-        window.location.hash === '#/register'
+        window.location.hash === '#/login'
     ) {
         //load the login page
         showLoginPage();

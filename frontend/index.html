@@ -12,6 +12,22 @@
     </head>
 
     <body>
+        <section id="loadingIconPage" class="loadingIconPage">
+            <div class="loadingIconContainer">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="background:transparent;display:block;" width="200px" height="200px" viewBox="0 0 100 100"
+                    preserveAspectRatio="xMidYMid">
+                    <path fill="none" stroke="#ebbb6c" stroke-width="8"
+                        stroke-dasharray="42.76482137044271 42.76482137044271"
+                        d="M24.3 30C11.4 30 5 43.3 5 50s6.4 20 19.3 20c19.3 0 32.1-40 51.4-40 C88.6 30 95 43.3 95 50s-6.4 20-19.3 20C56.4 70 43.6 30 24.3 30z"
+                        stroke-linecap="round" style="transform:scale(0.8);transform-origin:50px 50px">
+                        <animate attributeName="stroke-dashoffset" repeatCount="indefinite" dur="1s" keyTimes="0;1"
+                            values="0;256.58892822265625"></animate>
+                    </path>
+                </svg>
+                <div class="loadingIconTitle">QANDA</div>
+            </div>
+        </section>
         <section id="loginContainer" class="fullPage hidden">
             <div id="loginPage" class="login-registerPage">
                 <div class="login-registerBox">
@@ -59,7 +75,7 @@
                         </div>
                     </div>
                     <div class='onlyRegisterBox hidden' id="onlyRegisterBox">
-                        <div class="login-registerTitle">Register Qanda</div>
+                        <div class="login-registerTitle">Let's get started</div>
                         <form id="registerForm">
                             <div class="registerEmailInputRow">
                                 <svg t="1711118362522" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -69,6 +85,16 @@
                                         p-id="4226" fill="#dbdbdb"></path>
                                 </svg>
                                 <input type="email" id="registerEmail" class="emailInput" placeholder="Your email"
+                                    required>
+                            </div>
+                            <div class="passwordInputRow">
+                                <svg t="1711121439629" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg" p-id="7217" width="24" height="24">
+                                    <path
+                                        d="M524.55184308 578.6117613c207.85106489 0.62137837 372.08136818 13.04894578 372.08136817 237.67722667 0 52.5064723-8.94784853 107.68487158-25.3522375 161.68265198H123.14141582a562.28528735 562.28528735 0 0 1-25.41437534-161.68265198c0-224.62828089 164.29244112-237.0558483 372.14350601-237.67722667zM497.21119478 45.96622222a221.89421605 221.89421605 0 1 1 0 443.85056996 221.89421605 221.89421605 0 0 1 0-443.85056996z"
+                                        p-id="7218" fill="#dbdbdb"></path>
+                                </svg>
+                                <input type="text" id="registerUsername" class="passwordInput" placeholder="Username"
                                     required>
                             </div>
                             <div class="passwordInputRow">
@@ -82,13 +108,14 @@
                                     placeholder="Password" required>
                             </div>
                             <div class="passwordInputRow">
-                                <svg t="1711121439629" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg" p-id="7217" width="24" height="24">
+                                <svg t="1711119169956" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg" p-id="5336" width="24" height="24">
                                     <path
-                                        d="M524.55184308 578.6117613c207.85106489 0.62137837 372.08136818 13.04894578 372.08136817 237.67722667 0 52.5064723-8.94784853 107.68487158-25.3522375 161.68265198H123.14141582a562.28528735 562.28528735 0 0 1-25.41437534-161.68265198c0-224.62828089 164.29244112-237.0558483 372.14350601-237.67722667zM497.21119478 45.96622222a221.89421605 221.89421605 0 1 1 0 443.85056996 221.89421605 221.89421605 0 0 1 0-443.85056996z"
-                                        p-id="7218" fill="#dbdbdb"></path>
+                                        d="M780.8 354.58H665.6v-42.89c0-72.31-19.85-193.3-153.6-193.3-138.87 0-153.6 135.05-153.6 193.3v42.89H243.2v-42.89C243.2 122.25 348.79 0 512 0s268.8 122.25 268.8 311.69v42.89z m-192 314.84c0-43.52-34.58-78.65-76.8-78.65s-76.8 35.13-76.8 78.65c0 29.46 15.4 54.47 38.44 67.82v89.64c0 21.74 17.25 39.7 38.4 39.7s38.4-17.96 38.4-39.7v-89.64c23-13.35 38.36-38.36 38.36-67.82zM896 512v393.61c0 65.26-51.87 118.39-115.2 118.39H243.2c-63.291 0-115.2-53.13-115.2-118.39V512c0-65.22 51.87-118.39 115.2-118.39h537.6c63.33 0 115.2 53.17 115.2 118.39z"
+                                        fill="#dbdbdb" p-id="5337"></path>
                                 </svg>
-                                <input type="text" id="registerUsername" class="passwordInput" placeholder="Username">
+                                <input type="password" id="registerConfirmPassword" class="passwordInput"
+                                    placeholder="Confirm your password" required>
                             </div>
                             <div class="submitButtonContainer">
                                 <input id="registerButton" type="submit" value="Register" class="loginButton">
@@ -124,6 +151,7 @@
         </section>
         <script type="module" src="src/main.js"></script>
         <script type="module" src="src/loginRegister.js"></script>
+        <script type="module" src="src/request.js"></script>
     </body>
 
 </html>
