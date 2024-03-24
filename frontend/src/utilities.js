@@ -24,7 +24,7 @@ export function toast(message, type) {
 }
 
 export function clearNode(node) {
-    //* equal to node.innerHTML = '';
+    //* remove all child nodes
     while (node.firstChild) {
         node.removeChild(node.firstChild);
     }

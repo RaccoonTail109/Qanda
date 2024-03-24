@@ -1,4 +1,8 @@
 import { toast } from './utilities.js';
+
+const loginButton = document.getElementById('loginButtonMain');
+const registerButton = document.getElementById('registerButton');
+
 const base_url = 'http://localhost:5005';
 const defaultOptions = {
     method: 'GET',
@@ -56,6 +60,8 @@ function login(data) {
                 const token = response.token;
                 window.localStorage.setItem('token', token);
                 toast('Login success', 'success');
+                loginButton.classList.add('hidden');
+                logoutButton.classList.remove('hidden');
                 setTimeout(() => {
                     location.hash = "#/home";
                 }, 700);
