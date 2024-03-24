@@ -21,6 +21,22 @@ function showMainPage(targetPage) {
     userPage.classList.add('hidden');
     // show the target page
     targetPageElement.classList.remove('hidden');
+    if (targetPage === 'home') {
+        window.requestFunc.getThreadDetails()
+            .then((threadsDetails) => {
+                console.log("threadsDetails:", threadsDetails);
+                const homePage = document.getElementById('homePage');
+                homePage.innerHTML = '';
+                threadsDetails.forEach((thread) => {
+                    const threadElement = document.createElement('div');
+                    threadElement.innerHTML = `
+                    <h3>${thread.title}</h3>
+                    <p>${thread.content}</p>
+                    `;
+                    homePage.appendChild(threadElement);
+                });
+            });
+    }
 }
 
 function showLoginPage() {

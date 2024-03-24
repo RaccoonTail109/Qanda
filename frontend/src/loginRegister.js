@@ -1,30 +1,31 @@
-const loginForm = document.getElementById('loginForm');
-const registerForm = document.getElementById('registerForm');
+import { toast } from './utilities.js';
+const loginButton = document.getElementById('loginButton');
+const registerButton = document.getElementById('registerButton');
 
 const goRegisterButton = document.getElementById('goRegisterButton');
 const backLoginButton = document.getElementById('backLoginButton');
 const forgetPasswordButton = document.getElementById('forgetPasswordButton');
 
-var navButtons = document.querySelectorAll('.login-registerNav');
-
 
 function login() {
     event.preventDefault();
     const email = document.getElementById('loginEmail').value;
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+    //* validate email
+    if (!emailPattern.test(email)) {
+        toast('Please enter a valid email address.', 'error');
+        return;
+    }
     const password = document.getElementById('loginPassword').value;
     const data = {
         email,
         password,
     };
-    window.http.post("/auth/login", data)
-        .then(response => {
-            console.log('login success:', response);
-            location.hash = "#/home";
-        })
-        .catch(error => { console.error('Error:', error) });
+    window.requestFunc.login(data);
 
 }
-loginForm.addEventListener('submit', login);
+loginButton.addEventListener('click', login);
 
 function register() {
     event.preventDefault();
@@ -33,7 +34,7 @@ function register() {
 
     //* validate email
     if (!emailPattern.test(email)) {
-        alert('Enter a valid email address.');
+        toast('Please enter a valid email address.', 'error');
         return;
     }
 
@@ -42,14 +43,14 @@ function register() {
 
     //* validate password
     if (password !== confirmPassword) {
-        alert('Password and confirm password do not match, please try again.');
+        toast('Passwords do not match.', 'error');
         return;
     }
 
     const name = document.getElementById('registerUsername').value;
     //* validate username
     if (name.length < 1 || name.length > 20) {
-        alert('Enter a valid username between 1 and 20 characters.');
+        toast('Please enter a username between 1 and 20 characters.', 'error');
         return;
     }
     const data = {
@@ -57,14 +58,9 @@ function register() {
         password,
         name,
     };
-    window.http.post("/auth/register", data)
-        .then(response => {
-            console.log('register success:', response);
-            location.hash = "#/home";
-        })
-        .catch(error => { console.error('Error:', error) });
+    window.requestFunc.register(data);
 }
-registerForm.addEventListener('submit', register);
+registerButton.addEventListener('click', register);
 
 function goRegisterPage() {
     const registerPage = document.getElementById('onlyRegisterBox');
@@ -84,8 +80,7 @@ function backLoginPage() {
 }
 backLoginButton.onclick = backLoginPage;
 
-//todo: 这里的弹窗关闭按钮为确认，不是关闭或X，问一下要不要修改
 function showAlert() {
-    alert('This feature is not available yet.');
+    toast('Please contact the administrator to reset your password.', "info");
 }
 forgetPasswordButton.onclick = showAlert;
