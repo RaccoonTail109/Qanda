@@ -1,4 +1,6 @@
 import { toast } from './utilities.js';
+import { requestFunc } from './request.js';
+
 const loginButton = document.getElementById('loginButton');
 const registerButton = document.getElementById('registerButton');
 
@@ -22,7 +24,7 @@ function login() {
         email,
         password,
     };
-    window.requestFunc.login(data);
+    requestFunc.login(data);
 
 }
 loginButton.addEventListener('click', login);
@@ -58,7 +60,7 @@ function register() {
         password,
         name,
     };
-    window.requestFunc.register(data);
+    requestFunc.register(data);
 }
 registerButton.addEventListener('click', register);
 
@@ -83,4 +85,8 @@ backLoginButton.onclick = backLoginPage;
 function showAlert() {
     toast('Please contact the administrator to reset your password.', "info");
 }
-forgetPasswordButton.onclick = showAlert;
+forgetPasswordButton.addEventListener('click', (event) => {
+    showAlert();
+    event.preventDefault();
+
+});

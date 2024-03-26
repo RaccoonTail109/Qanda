@@ -43,13 +43,26 @@ function post(url, data) {
         .catch(error => console.error('Error:', error));
 }
 
-
 const requestFunc = {
     login: login,
     register: register,
     getThreadDetails: getThreadDetails,
+    submitCreatedThread: submitCreatedThread,
 }
 
+function submitCreatedThread(data) {
+    http.post('/thread', data)
+        .then(response => {
+            if (response.error) {
+                throw new Error(response.error);
+            } else {
+                console.log('thread created:', response);
+                toast('Thread created', 'success');
+                setTimeout(() => { window.location.hash = '#/home'; }, 700);
+            }
+        })
+
+}
 function login(data) {
     http.post("/auth/login", data)
         .then(response => {
@@ -98,4 +111,4 @@ function getThreadDetails() {
         });
 }
 
-window.requestFunc = requestFunc;
+export { requestFunc };

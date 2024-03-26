@@ -19,7 +19,7 @@ export function toast(message, type) {
         toastContainer.classList.add('text-bg-primary');
     }
 
-    var toast = new bootstrap.Toast(toastContainer, { delay: 5000 });
+    var toast = new bootstrap.Toast(toastContainer, { delay: 2000 });
     toast.show();
 }
 
@@ -29,3 +29,14 @@ export function clearNode(node) {
         node.removeChild(node.firstChild);
     }
 }
+
+var createTitleTextarea = document.querySelector('.createThreadTitleInput');
+var createThreadContentInput = document.querySelector('.createThreadContentInput');
+createTitleTextarea.addEventListener('input', function () {
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+});
+createThreadContentInput.addEventListener('input', function () {
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+});

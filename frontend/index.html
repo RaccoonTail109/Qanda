@@ -11,6 +11,7 @@
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" media="screen" href="styles/global.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="styles/loginPage.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="styles/createPage.css" />
     </head>
 
     <body>
@@ -141,30 +142,113 @@
                     </div>
                 </div>
             </div>
+        </section>
+        <section id="createPage" class="fullPage hidden">
+            <div class="createBackgroundPicContainer">
+                <div class="createThreadHeaderRow">
+                    <button class="createComeBackButton" id="createComeBackButton">
+                        <svg t="1711372860302" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="3670" width="35" height="35">
+                            <path
+                                d="M671.968 912c-12.288 0-24.576-4.672-33.952-14.048L286.048 545.984c-18.752-18.72-18.752-49.12 0-67.872l351.968-352c18.752-18.752 49.12-18.752 67.872 0 18.752 18.72 18.752 49.12 0 67.872L387.872 512.032l318.016 318.016c18.752 18.752 18.752 49.12 0 67.872-9.344 9.408-21.632 14.08-33.92 14.08z"
+                                p-id="3671" fill="#ffffff"></path>
+                        </svg>
+                    </button>
+                    <div class="createPagePrivateandPublicandSubmitContainer">
+                        <button id="submitThreadButton" class="submitThreadButton">
+                            <svg t="1711368866763" class="icon" viewBox="0 0 1140 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="4750" width="35" height="35">
+                                <path
+                                    d="M179.929021 556.308647L21.004775 374.113351A74.353844 74.353844 0 0 1 2.274418 342.896088a76.62419 76.62419 0 0 1 56.758659-93.084201L1042.660643 2.344133a74.92143 74.92143 0 0 1 45.974514 2.837933 76.62419 76.62419 0 0 1 43.704167 98.760067L796.895648 975.187553a70.948324 70.948324 0 0 1-20.433117 29.514503 76.056603 76.056603 0 0 1-107.273866-6.243453l-160.627006-180.492536A45.406927 45.406927 0 0 1 513.102351 754.396368a44.839341 44.839341 0 0 1 63.569699 3.973106l144.166994 165.167699 320.686426-825.838493-939.355812 232.710503 170.275978 199.222895-36.893129 238.953955 519.90932-462.583073a45.066375 45.066375 0 1 1 59.596592 67.542804L269.040116 858.832301a77.191777 77.191777 0 0 1-61.866938 18.162771 75.489017 75.489017 0 0 1-63.569699-86.840748z"
+                                    fill="#ffffff" p-id="4751"></path>
+                            </svg>
+                            <div class="submitTitle">Submit</div>
+                        </button>
+                    </div>
+                </div>
+                <div class="publicCheckboxContainer">
+                    <label for="publicThreadCheckbox">Add page to Public</label>
+                    <input type="checkbox" id="publicThreadCheckbox" name="publicThreadCheckbox" value="isPublic">
+                </div>
+            </div>
+            <div class="createContainer">
+                <div class="createThreadTextAreaContainer">
+                    <textarea id="createThreadTitleInput" class="createThreadTitleInput" rows="1"
+                        placeholder="Untitle"></textarea>
+                    <textarea id="createThreadContentInput" class="createThreadContentInput" rows="1"
+                        placeholder="Empty"></textarea>
+                </div>
+            </div>
 
         </section>
         <section id="mainContainer" class="fullPage">
             <div class="headerContainer">
-                <h1 class="iconTitle">Qanda</h1>
-                <div class="loginandoutContainer">
-
-                    <button id="loginButtonMain" class="loginButtonMain">Login</button>
-                    <button id="logoutButton" class="logoutButton hidden">Logout</button>
+                <div class="leftHeaderContainer">
+                    <div class="iconTitleContainer">
+                        <svg t="1711325601596" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="3633" width="30" height="30">
+                            <path
+                                d="M543.04 291.04a96 96 0 1 0-96 96 96 96 0 0 0 96-96z m-128 0a32 32 0 1 1 32 32 32 32 0 0 1-32-32zM303.04 451.04a80 80 0 1 0 80 80 80 80 0 0 0-80-80z m0 96a16 16 0 1 1 16-16 16 16 0 0 1-16 16zM575.04 739.04a64 64 0 1 0 64-64 64 64 0 0 0-64 64z"
+                                p-id="3634" fill="#1F2021"></path>
+                            <path
+                                d="M886.88 272c39.84-60.64 64-113.12 64-148.96a59.68 59.68 0 0 0-17.12-44.48C896 40.8 800 80 725.28 135.84a32 32 0 1 0 32 55.68 328.8 328.8 0 0 1 130.56-65.76c-1.6 41.44-96 202.4-330.24 433.44C330.88 781.92 158.56 884 115.04 884.64c0.96-11.36 8.8-44.48 58.56-118.72a32 32 0 0 0 3.2-6.08l2.24-5.92a9.76 9.76 0 0 0 0-2.08 32 32 0 0 0 3.52-37.28A384 384 0 0 1 511.04 131.04a392.8 392.8 0 0 1 200.96 55.04A32 32 0 0 0 740.16 128a440.64 440.64 0 0 0-229.12-60.96A448 448 0 0 0 119.2 731.68a14.88 14.88 0 0 1 0 1.6c-68.16 102.4-84.16 165.44-50.4 198.56a59.2 59.2 0 0 0 43.04 16c39.36 0 92.96-24.96 150.08-60.8A448 448 0 0 0 886.88 272zM511.04 899.04A382.08 382.08 0 0 1 320 848a2720 2720 0 0 0 282.08-243.2 2521.28 2521.28 0 0 0 244.64-275.84 384 384 0 0 1-336 570.08z"
+                                p-id="3635" fill="#1F2021"></path>
+                        </svg>
+                        <h1 class="iconTitle">Qanda</h1>
+                    </div>
+                    <div class="sideBarContainer">
+                        <div class="smallSideBarContainer">
+                            <a href="#/home" class="sideBarLink" id="homeSideNav">
+                                HOME</a>
+                        </div>
+                        <svg t="1711375323191" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="7338" id="mx_n_1711375323191" width="40"
+                            height="40">
+                            <path d="M512 304v448a16 16 0 1 0 32 0v-448a16 16 0 1 0-32 0z" fill="#1F2021" p-id="7339">
+                            </path>
+                        </svg>
+                        <div class="smallSideBarContainer">
+                            <a href="#/thread" class="sideBarLink" id="threadSideNav">
+                                THREAD</a>
+                        </div>
+                        <svg t="1711375323191" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="7338" id="mx_n_1711375323191" width="40"
+                            height="40">
+                            <path d="M512 304v448a16 16 0 1 0 32 0v-448a16 16 0 1 0-32 0z" fill="#1F2021" p-id="7339">
+                            </path>
+                        </svg>
+                        <div class="smallSideBarContainer">
+                            <a href="#/user" class="sideBarLink" id="userSideNav">
+                                USER</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="headerButtonContainer">
+                    <div class="createThreadIconContainer">
+                        <button id="createThreadIconButton" class="createThreadIconButton">
+                            <svg t="1711357454064" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                xmlns="http://www.w3.org/2000/svg" p-id="2395" width="39" height="39">
+                                <path
+                                    d="M564.053333 149.418667C547.712 149.333333 530.346667 149.333333 512 149.333333h-42.666667c-160.896 0-241.365333 0-291.328 50.005334C128 249.301333 128 329.770667 128 490.666667v42.666666c0 160.896 0 241.365333 50.005333 291.328C227.968 874.666667 308.437333 874.666667 469.333333 874.666667h42.666667c160.896 0 241.365333 0 291.328-50.005334C853.333333 774.698667 853.333333 694.229333 853.333333 533.333333v-42.666666-22.4l-97.109333 97.109333c-52.053333 52.053333-78.037333 78.037333-108.714667 96.298667a286.72 286.72 0 0 1-66.858666 29.056c-34.304 9.984-71.082667 11.221333-144.597334 13.781333-47.018667 1.621333-70.528 2.432-87.893333-7.253333a71.637333 71.637333 0 0 1-27.904-27.818667c-9.642667-17.408-8.832-40.96-7.253333-87.978667 2.56-73.514667 3.84-110.250667 13.781333-144.554666 6.826667-23.466667 16.597333-45.909333 29.056-66.901334 18.304-30.677333 44.330667-56.661333 96.341333-108.672l111.872-111.914666z"
+                                    fill="#EDC17B" p-id="2396"></path>
+                                <path
+                                    d="M645.845333 145.92a160 160 0 0 1 225.792 225.792L645.845333 145.92zM600.32 190.933333l-151.296 151.338667c-28.16 28.117333-46.293333 46.250667-59.264 68.010667a202.666667 202.666667 0 0 0-20.522667 47.274666c-7.04 24.32-7.936 49.92-9.301333 89.685334l-0.170667 5.461333c-0.426667 12.928-0.853333 24.704-0.298666 34.474667 0.597333 10.496 2.432 22.058667 8.618666 33.28 6.826667 12.16 16.853333 22.186667 29.013334 29.013333 11.221333 6.186667 22.784 8.021333 33.28 8.618667 9.813333 0.554667 21.546667 0.170667 34.432-0.298667l5.504-0.170667c39.765333-1.365333 65.408-2.261333 89.685333-9.301333a202.666667 202.666667 0 0 0 47.274667-20.565333c21.76-12.928 39.893333-31.061333 68.010666-59.221334l151.338667-151.338666-226.261333-226.261334z"
+                                    fill="#EDC17B" p-id="2397"></path>
+                                <path
+                                    d="M826.709333 417.28l-226.133333-226.133333 45.226667-45.269334 226.133333 226.133334-45.226667 45.269333z"
+                                    fill="#ebbb6c" p-id="2398"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="loginandoutContainer">
+                        <button id="loginButtonMain" class="loginButtonMain">Login</button>
+                        <button id="logoutButton" class="logoutButton hidden">Logout</button>
+                    </div>
                 </div>
             </div>
             <div class="backgroundPic">
                 <div class="partPage">
-                    <div class="sideBarContainer">
-                        <div class="list-group">
-                            <a href="#/home" class="list-group-item list-group-item-action active" id="homeSideNav"
-                                aria-current="true">HOME</a>
-                            <a href="#/thread" class="list-group-item list-group-item-action"
-                                id="threadSideNav">THREAD</a>
-                            <a href="#/user" class="list-group-item list-group-item-action" id="userSideNav">USER</a>
-                        </div>
-                    </div>
-
-                    <main>
+                    <main class="page">
                         <div id="homePage" class="page">Home页面</div>
                         <div id="threadPage" class="page hidden">Thread页面</div>
                         <div id="userPage" class="page hidden">User页面</div>
@@ -189,6 +273,7 @@
         <script type="module" src="src/utilities.js"></script>
         <script type="module" src="src/main.js"></script>
         <script type="module" src="src/loginRegister.js"></script>
+        <script type="module" src="src/createThread.js"></script>
         <script type="module" src="src/request.js"></script>
     </body>
 
