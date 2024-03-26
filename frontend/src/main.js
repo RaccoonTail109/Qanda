@@ -1,8 +1,9 @@
 import { BACKEND_PORT } from './config.js';
 // A helper you may want to use when uploading new images to the server.
 import { fileToDataUrl } from './helpers.js';
-import { clearNode, toast } from './utilities.js';
+import { clearNode, toast, getThreadId } from './utilities.js';
 import { requestFunc } from './request.js';
+import { getModifiedThreadsDetails, renderThreadsList, renderThreadContent, renderEmptyThreadContent } from './homePage.js';
 
 const loginButton = document.getElementById('loginButtonMain');
 const logoutButton = document.getElementById('logoutButton');
@@ -11,6 +12,11 @@ const threadSideNav = document.getElementById('threadSideNav');
 const userSideNav = document.getElementById('userSideNav');
 const createThreadButton = document.getElementById('createThreadIconButton');
 const createComeBackButton = document.getElementById("createComeBackButton");
+
+function hideLoadingPage() {
+    const loadingPage = document.getElementById('loadingIconPage');
+    loadingPage.style.display = 'none';
+}
 
 function showMainPage(targetPage) {
     const mainPage = document.getElementById('mainContainer');
@@ -23,7 +29,8 @@ function showMainPage(targetPage) {
     loginPage.classList.add('hidden');
     // footer.classList.remove('hidden');
     //show the target page
-    const targetPageElement = document.querySelector(`#${targetPage}Page`);
+    const [pageName] = targetPage.split('?');
+    const targetPageElement = document.querySelector(`#${pageName}Page`);
     const homePage = document.getElementById('homePage');
     const threadPage = document.getElementById('threadPage');
     const userPage = document.getElementById('userPage');
@@ -33,20 +40,26 @@ function showMainPage(targetPage) {
     userPage.classList.add('hidden');
     // show the target page
     targetPageElement.classList.remove('hidden');
-    if (targetPage === 'home') {
+    if (pageName === 'home') {
         requestFunc.getThreadDetails()
             .then((threadsDetails) => {
-                console.log("threadsDetails:", threadsDetails);
-                const homePage = document.getElementById('homePage');
-                clearNode(homePage);
-                threadsDetails.forEach((thread) => {
-                    const threadElement = document.createElement('div');
-                    threadElement.innerHTML = `
-                    <h3>${thread.title}</h3>
-                    <p>${thread.content}</p>
-                    `;
-                    homePage.appendChild(threadElement);
-                });
+                const threadListContainer = document.querySelector('.threadListContainer');
+                clearNode(threadListContainer);
+                getModifiedThreadsDetails(threadsDetails)
+                    .then(() => {
+                        renderThreadsList(window.__ThreadDetails__, threadListContainer);
+
+                        const threadIdDict = getThreadId();
+                        console.log(threadIdDict);
+                        const threadId = threadIdDict?.threadId;
+
+                        if (threadId) {
+                            console.log('window.__ThreadDetails__2:', window.__ThreadDetails__);
+                            renderThreadContent(threadId);
+                        } else {
+                            renderEmptyThreadContent();
+                        }
+                    })
             });
     }
 }
@@ -74,14 +87,10 @@ function showCreateThreadPage() {
 }
 
 loginButton.addEventListener('click', () => {
-    location.hash = "#/login";
+    location.hash = "#login";
     showLoginPage();
 });
 
-function hideLoadingPage() {
-    const loadingPage = document.getElementById('loadingIconPage');
-    loadingPage.style.display = 'none';
-}
 
 window.addEventListener('hashchange', function () {
     const token = window.localStorage.getItem('token');
@@ -96,23 +105,27 @@ window.addEventListener('hashchange', function () {
         logoutButton.classList.add('hidden');
     }
 
+    const loadingPage = document.getElementById('loadingIconPage');
+    loadingPage.style.display = 'block';
+
+    const pageHash = window.location.hash.split('?')[0];
     if (
-        window.location.hash === '#/login'
+        pageHash === '#login'
     ) {
         //load the login page
         showLoginPage();
-    } else if (window.location.hash === '' || window.location.hash === '#/home') {
+    } else if (pageHash === '' || pageHash === '#home') {
         homeSideNav.classList.remove('active');
         threadSideNav.classList.remove('active');
         userSideNav.classList.remove('active');
 
         homeSideNav.classList.add('active');
         showMainPage('home');
-    } else if (window.location.hash === '#/create') {
+    } else if (pageHash === '#create') {
         showCreateThreadPage();
     } else {
         //load the target page
-        const targetPage = window.location.hash.split('/')[1];
+        const targetPage = pageHash.substring(1);
         const targetSideNav = document.getElementById(`${targetPage}SideNav`);
         homeSideNav.classList.remove('active');
         threadSideNav.classList.remove('active');
@@ -120,6 +133,7 @@ window.addEventListener('hashchange', function () {
         targetSideNav.classList.add('active');
         showMainPage(targetPage);
     }
+    setTimeout(() => { hideLoadingPage() }, 500);
 });
 
 window.addEventListener('load', function () {
@@ -138,17 +152,17 @@ window.addEventListener('load', function () {
     setTimeout(hideLoadingPage, 500);
 
     if (
-        window.location.hash === '#/login'
+        window.location.hash === '#login'
     ) {
         //load the login page
         showLoginPage();
-    } else if (window.location.hash === '' || window.location.hash === '#/home') {
+    } else if (window.location.hash === '' || window.location.hash === '#home') {
         showMainPage('home');
-    } else if (window.location.hash === '#/create') {
+    } else if (window.location.hash === '#create') {
         showCreateThreadPage();
     } else {
         //load the target page
-        const targetPage = window.location.hash.split('/')[1];
+        const targetPage = window.location.hash.substring(1);
         showMainPage(targetPage);
     }
 });
@@ -157,16 +171,16 @@ logoutButton.addEventListener('click', () => {
     window.localStorage.removeItem('token');
     loginButton.classList.remove('hidden');
     logoutButton.classList.add('hidden');
-    location.hash = "#/login";
+    location.hash = "#login";
     toast('Logout success', 'success');
 });
 
 function goCreateThreadPage() {
-    window.location.hash = "#/create";
+    window.location.hash = "#create";
 }
 createThreadButton.addEventListener('click', goCreateThreadPage);
 
 function backHomePage() {
-    window.location.hash = "#/home";
+    window.location.hash = "#home";
 }
 createComeBackButton.addEventListener('click', backHomePage);

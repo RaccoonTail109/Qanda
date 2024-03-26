@@ -82,6 +82,14 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.emailInput:focus {
+    outline: none;
+}
+
+.passwordInput:focus {
+    outline: none;
+}
+
 .registerEmailInputRow {
     width: 100%;
     border-bottom: #dbdbdb 2px solid;

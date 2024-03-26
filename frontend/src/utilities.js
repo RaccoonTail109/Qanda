@@ -2,7 +2,7 @@ export function toast(message, type) {
     var toastContainer = document.getElementById("popToast");
     var toastBody = toastContainer.querySelector(".toast-body");
     var closeButton = toastContainer.querySelector(".btn-close");
-
+    console.log("entering toast");
     toastBody.textContent = message;
 
     if (type === 'success') {
@@ -40,3 +40,16 @@ createThreadContentInput.addEventListener('input', function () {
     this.style.height = 'auto';
     this.style.height = this.scrollHeight + 'px';
 });
+
+export function getThreadId() {
+    var hash = location.hash;
+    var query = hash.split('?')[1];
+    var queryDict = {};
+    if (query) {
+        query.split('&').forEach(function (item) {
+            var [key, value] = item.split('=');
+            queryDict[key] = value;
+        });
+    }
+    return queryDict
+}

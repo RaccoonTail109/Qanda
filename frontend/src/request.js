@@ -48,6 +48,7 @@ const requestFunc = {
     register: register,
     getThreadDetails: getThreadDetails,
     submitCreatedThread: submitCreatedThread,
+    getUserDetails: getUserDetails,
 }
 
 function submitCreatedThread(data) {
@@ -57,11 +58,12 @@ function submitCreatedThread(data) {
                 throw new Error(response.error);
             } else {
                 console.log('thread created:', response);
+                const threadId = response.id;
+                location.hash = `#home?threadId=${threadId}`;
+                console.log('threadId:', threadId);
                 toast('Thread created', 'success');
-                setTimeout(() => { window.location.hash = '#/home'; }, 700);
             }
-        })
-
+        }).catch(error => { toast(error, 'error') })
 }
 function login(data) {
     http.post("/auth/login", data)
@@ -76,7 +78,7 @@ function login(data) {
                 loginButton.classList.add('hidden');
                 logoutButton.classList.remove('hidden');
                 setTimeout(() => {
-                    location.hash = "#/home";
+                    location.hash = "#home";
                 }, 700);
             }
         })
@@ -93,7 +95,7 @@ function register(data) {
                 window.localStorage.setItem('token', token);
                 toast('Register success', 'success');
                 setTimeout(() => {
-                    location.hash = "#/home";
+                    location.hash = "#home";
                 }, 700);
             }
         })
@@ -109,6 +111,14 @@ function getThreadDetails() {
             });
             return Promise.all(threadDetailPromises);
         });
+}
+
+function getUserDetails(usrerId) {
+    return http.get(`/user?userId=${usrerId}`)
+        .then(userDetails => {
+            return userDetails;
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 export { requestFunc };

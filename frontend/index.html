@@ -12,6 +12,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="styles/global.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="styles/loginPage.css" />
         <link rel="stylesheet" type="text/css" media="screen" href="styles/createPage.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="styles/homePage.css" />
     </head>
 
     <body>
@@ -144,6 +145,15 @@
             </div>
         </section>
         <section id="createPage" class="fullPage hidden">
+            <div id="popToast" class="toast align-items-center text-bg-primary border-0 pageCenter popToast"
+                role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
             <div class="createBackgroundPicContainer">
                 <div class="createThreadHeaderRow">
                     <button class="createComeBackButton" id="createComeBackButton">
@@ -179,9 +189,17 @@
                         placeholder="Empty"></textarea>
                 </div>
             </div>
-
         </section>
         <section id="mainContainer" class="fullPage">
+            <div id="popToast" class="toast align-items-center text-bg-primary border-0 pageCenter" role="alert"
+                aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
             <div class="headerContainer">
                 <div class="leftHeaderContainer">
                     <div class="iconTitleContainer">
@@ -198,7 +216,7 @@
                     </div>
                     <div class="sideBarContainer">
                         <div class="smallSideBarContainer">
-                            <a href="#/home" class="sideBarLink" id="homeSideNav">
+                            <a href="#home" class="sideBarLink" id="homeSideNav">
                                 HOME</a>
                         </div>
                         <svg t="1711375323191" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -208,7 +226,7 @@
                             </path>
                         </svg>
                         <div class="smallSideBarContainer">
-                            <a href="#/thread" class="sideBarLink" id="threadSideNav">
+                            <a href="#thread" class="sideBarLink" id="threadSideNav">
                                 THREAD</a>
                         </div>
                         <svg t="1711375323191" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -218,7 +236,7 @@
                             </path>
                         </svg>
                         <div class="smallSideBarContainer">
-                            <a href="#/user" class="sideBarLink" id="userSideNav">
+                            <a href="#user" class="sideBarLink" id="userSideNav">
                                 USER</a>
                         </div>
                     </div>
@@ -249,21 +267,18 @@
             <div class="backgroundPic">
                 <div class="partPage">
                     <main class="page">
-                        <div id="homePage" class="page">Home页面</div>
+                        <div id="homePage" class="page">
+                            <div class="homePage">
+                                <div class="threadListContainer">
+                                </div>
+                                <div class="threadDetailContainer">
+                                </div>
+                            </div>
+
+                        </div>
                         <div id="threadPage" class="page hidden">Thread页面</div>
                         <div id="userPage" class="page hidden">User页面</div>
                     </main>
-                </div>
-            </div>
-
-
-            <div id="popToast" class="toast align-items-center text-bg-primary border-0 pageCenter" role="alert"
-                aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
                 </div>
             </div>
         </section>
@@ -275,6 +290,7 @@
         <script type="module" src="src/loginRegister.js"></script>
         <script type="module" src="src/createThread.js"></script>
         <script type="module" src="src/request.js"></script>
+        <script type="module" src="src/homePage.js"></script>
     </body>
 
 </html>

@@ -1,0 +1,154 @@
+.homePage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+}
+
+.threadListContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 250px;
+    margin-left: 20px;
+}
+
+.threadListElement {
+    padding: 5px;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    user-select: none;
+    cursor: pointer;
+}
+
+.threadListFooter {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    justify-content: space-between;
+}
+
+.threadTitleRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.threadListTitle {
+    font-size: 24px;
+    color: #1F2021;
+    font-weight: 600;
+    width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.threadLikeIcon {
+    margin-right: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 18px;
+    color: #1F2021;
+}
+
+.threadAuthor,
+.threadTime {
+    margin: 0;
+    font-size: 15px;
+    color: #A5A4A1
+}
+
+.listLikeNumber {
+    margin-top: 2px;
+}
+
+.threadDetailContainer {
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding-left: 60px;
+    padding-top: 20px;
+    padding-right: 50px;
+}
+
+.threadContentTitle {
+    font-size: 50px;
+    color: #1F2021;
+    line-height: 1;
+    letter-spacing: -0.5px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.threadInfoRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.operatorContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.threadContentOperator {
+    border: none;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 7px;
+    font-size: 15px;
+    color: #1F2021
+}
+
+
+.threadInfoAuthor {
+    font-size: 15px;
+    color: #1F2021
+}
+
+.threadContentDetailContainer {
+    padding: 10px;
+    font-size: 20px;
+
+}
+
+.emptyIconContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30vh;
+}
+
+.enmptyTitleSentence {
+    font-size: 30px;
+    font-weight: 600;
+    color: #1F2021;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.enmptySentence {
+    font-size: 16px;
+    font-weight: 400;
+    color: #1F2021;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

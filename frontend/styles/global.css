@@ -35,7 +35,7 @@ body {
 
 .partPage {
     border: none;
-    width: 80%;
+    width: 85%;
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -217,4 +217,8 @@ main {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.selected {
+    background-color: rgba(235, 187, 108, 0.9) !important;
 }
