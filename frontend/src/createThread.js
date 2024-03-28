@@ -25,9 +25,9 @@ function submitThread() {
     const title = createThreadTitleInput.value;
     const content = createThreadContentInput.value;
     const isPublic = publicThreadCheckbox.checked;
-    if (title.length === 0 || content.length === 0) {
-        toast('Please fill in all fields to create', 'info');
-        alert('Please fill in all fields to create');
+    if (title.length === 0) {
+        toast('Please fill in all fields to create', 'error');
+        // alert('Please fill in all fields to create');
         return;
     }
     const data = {

@@ -2,7 +2,7 @@ export function toast(message, type) {
     var toastContainer = document.getElementById("popToast");
     var toastBody = toastContainer.querySelector(".toast-body");
     var closeButton = toastContainer.querySelector(".btn-close");
-    console.log("entering toast");
+    // console.log("entering toast");
     toastContainer.classList.remove('hidden');
     toastBody.textContent = message;
 
@@ -22,6 +22,7 @@ export function toast(message, type) {
 
     var toast = new bootstrap.Toast(toastContainer, { delay: 2000 });
     toast.show();
+    // console.log("toast shown");
 }
 
 export function clearNode(node) {

@@ -8,8 +8,8 @@ import { getModifiedThreadsDetails, renderThreadsList, renderThreadContent, rend
 const loginButton = document.getElementById('loginButtonMain');
 const logoutButton = document.getElementById('logoutButton');
 const homeSideNav = document.getElementById('homeSideNav');
-const threadSideNav = document.getElementById('threadSideNav');
-const userSideNav = document.getElementById('userSideNav');
+// const threadSideNav = document.getElementById('threadSideNav');
+const profileSideNav = document.getElementById('userSideNav');
 const createThreadButton = document.getElementById('createThreadIconButton');
 const createComeBackButton = document.getElementById("createComeBackButton");
 
@@ -34,12 +34,12 @@ function showMainPage(targetPage) {
     const [pageName] = targetPage.split('?');
     const targetPageElement = document.querySelector(`#${pageName}Page`);
     const homePage = document.getElementById('homePage');
-    const threadPage = document.getElementById('threadPage');
+    // const threadPage = document.getElementById('threadPage');
     const userPage = document.getElementById('userPage');
 
     // hide all pages
     homePage.classList.add('hidden');
-    threadPage.classList.add('hidden');
+    // threadPage.classList.add('hidden');
     userPage.classList.add('hidden');
     // show the target page
     targetPageElement.classList.remove('hidden');
@@ -134,7 +134,7 @@ window.addEventListener('hashchange', function () {
         showLoginPage();
     } else if (pageHash === '' || pageHash === '#home') {
         homeSideNav.classList.remove('active');
-        threadSideNav.classList.remove('active');
+        // threadSideNav.classList.remove('active');
         userSideNav.classList.remove('active');
 
         homeSideNav.classList.add('active');
@@ -148,7 +148,7 @@ window.addEventListener('hashchange', function () {
         const targetPage = pageHash.substring(1);
         const targetSideNav = document.getElementById(`${targetPage}SideNav`);
         homeSideNav.classList.remove('active');
-        threadSideNav.classList.remove('active');
+        // threadSideNav.classList.remove('active');
         userSideNav.classList.remove('active');
         targetSideNav.classList.add('active');
         showMainPage(targetPage);

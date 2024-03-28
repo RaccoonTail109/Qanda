@@ -131,15 +131,30 @@
 }
 
 .threaadInfoTime {
+    margin-top: 3px;
     font-size: 15px;
     color: #A5A4A1;
     margin-left: 13px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+.threadInfoAuthorRow {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    align-items: center;
+    font-size: 15px;
+    gap: 3px;
+}
+
+.threadInfoBy {
+
+    color: #1F2021
 }
 
 .threadInfoAuthor {
-    font-size: 15px;
-    color: #1F2021
+    user-select: none;
+    cursor: pointer;
 }
 
 .threadContentDetailContainer {
@@ -199,6 +214,7 @@
 }
 
 .commentImg {
+    /* position: fixed; */
     width: 20px;
     height: 20px;
 
@@ -212,16 +228,17 @@
 }
 
 .threadContentComment {
+    position: relative;
     background-color: rgba(247, 247, 247, 0.5);
     border-radius: 10px;
     height: 30px;
-    padding-left: 5px;
+    padding-left: 9px;
     padding-top: 2px;
     align-items: end;
     width: 60vh;
-    overflow: hidden;
-    white-space: nowrap;
 
+    white-space: nowrap;
+    gap: 10px
 }
 
 .commentInput {
@@ -229,6 +246,8 @@
     height: 21px;
     border: none;
     background-color: transparent;
+    flex-grow: 1;
+    overflow: auto;
 }
 
 .commentInput:focus {
@@ -238,5 +257,167 @@
 .commentInput::placeholder {
     color: #A5A4A1;
     font-size: 15px;
+}
 
+.commentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    border: none;
+}
+
+.commentListTitle {
+    margin-left: 5px;
+    font-size: 20px;
+    color: #1F2021;
+    font-weight: 600;
+    font-family: Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.commentElement {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+    margin-top: 10px;
+    margin-bottom: 3px;
+    border-bottom: #1F2021 1px solid;
+    width: 100%;
+    margin-left: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.commentLikeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    font-size: 14px;
+    color: #1F2021;
+}
+
+.commentLikeIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.commentElementLeft {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+}
+
+.commentElementDetail {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    margin-left: 5px;
+    flex-grow: 1;
+}
+
+.commentDetailUpperRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    gap: 10px;
+}
+
+.commentOperator {
+    gap: 15px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+}
+
+.commentAuthor {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1F2021;
+    font-weight: 600;
+}
+
+.commentTime {
+    color: #A5A4A1;
+    font-size: 14px;
+}
+
+.commentElementRight {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    margin-right: 5px;
+    height: 100%;
+    padding-bottom: 3px;
+}
+
+.commentReply {
+    user-select: none;
+    cursor: pointer;
+}
+
+.commentEdit {
+    user-select: none;
+    cursor: pointer;
+
+}
+
+.commentReplyInputRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+    gap: 5px;
+    padding-bottom: 5px;
+}
+
+.commentReplyInputRow.hidden {
+    display: none;
+}
+
+.commentReplyInput {
+    width: 100%;
+    height: 21px;
+    border: none;
+    background-color: transparent;
+    font-size: 15px;
+    margin-top: 5px;
+    overflow: auto;
+    resize: vertical;
+}
+
+
+
+.commentReplySubmit {
+    margin-top: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+.emptyCommentContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.emptyCommentContainerRow {
+    padding-top: 20px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #F3F3F5;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }

@@ -82,8 +82,69 @@ const requestFunc = {
     likeThread: likeThread,
     watchThread: watchThread,
     deleteThread: deleteThread,
+    createNewComment: createNewComment,
+    getComments: getComments,
+    deleteComment: deleteComment,
+    likeComment: likeComment,
+    editComment: editComment,
 }
 
+function editComment(data) {
+    return http.put('/comment', data)
+        .then(response => {
+            if (response.error) {
+                throw new Error(response.error);
+            } else {
+                console.log('comment edited:', response);
+                toast('Comment edited', 'success');
+            }
+        }).catch(error => { toast(error, 'error') })
+
+}
+
+function deleteComment(data) {
+    return deleteMethod('/comment', data)
+        .then(response => {
+            if (response.error) {
+                throw new Error(response.error);
+            } else {
+                // console.log('comment deleted:', response);
+                toast('Comment deleted', 'success');
+            }
+        }).catch(error => { toast(error, 'error') })
+}
+
+function likeComment(data) {
+    return http.put('/comment/like', data)
+        .then(response => {
+            if (response.error) {
+                throw new Error(response.error);
+            } else {
+                console.log('comment liked:', response);
+                return response;
+            }
+        }).catch(error => { console.log('error:', error); toast(error, 'error') })
+}
+
+function getComments(threadId) {
+    return http.get(`/comments?threadId=${threadId}`)
+        .then((comments) => {
+            // console.log('comments:', comments);
+            return comments;
+        })
+}
+
+function createNewComment(data) {
+    return http.post('/comment', data)
+        .then(response => {
+            if (response.error) {
+                throw new Error(response.error);
+            } else {
+                // console.log('comment created:', response);
+                return response;
+            }
+        }).catch(error => { console.log('error:', error); toast(error, 'error') })
+}
 function deleteThread(data) {
     return deleteMethod('/thread', data)
         .then(response => {
