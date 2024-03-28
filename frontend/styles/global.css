@@ -141,6 +141,7 @@ main {
     color: #1F2021;
     background-color: white;
     box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.6);
+    z-index: 9999;
 }
 
 .iconTitleContainer {
@@ -217,8 +218,4 @@ main {
     display: flex;
     flex-direction: row;
     align-items: center;
-}
-
-.selected {
-    background-color: rgba(235, 187, 108, 0.9) !important;
 }

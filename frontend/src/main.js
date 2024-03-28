@@ -22,10 +22,12 @@ function showMainPage(targetPage) {
     const mainPage = document.getElementById('mainContainer');
     const loginPage = document.getElementById('loginContainer');
     const createThreadPage = document.getElementById('createPage');
+    const editThreadPage = document.getElementById('editPage');
     const footer = document.querySelector('#footer');
     // show the main page and hide the login page
     mainPage.classList.remove('hidden');
     createThreadPage.classList.add('hidden');
+    editThreadPage.classList.add('hidden');
     loginPage.classList.add('hidden');
     // footer.classList.remove('hidden');
     //show the target page
@@ -34,6 +36,7 @@ function showMainPage(targetPage) {
     const homePage = document.getElementById('homePage');
     const threadPage = document.getElementById('threadPage');
     const userPage = document.getElementById('userPage');
+
     // hide all pages
     homePage.classList.add('hidden');
     threadPage.classList.add('hidden');
@@ -50,11 +53,10 @@ function showMainPage(targetPage) {
                         renderThreadsList(window.__ThreadDetails__, threadListContainer);
 
                         const threadIdDict = getThreadId();
-                        console.log(threadIdDict);
+                        // console.log(threadIdDict);
                         const threadId = threadIdDict?.threadId;
 
                         if (threadId) {
-                            console.log('window.__ThreadDetails__2:', window.__ThreadDetails__);
                             renderThreadContent(threadId);
                         } else {
                             renderEmptyThreadContent();
@@ -69,22 +71,38 @@ function showLoginPage() {
     const mainPage = document.getElementById('mainContainer');
     const loginPage = document.getElementById('loginContainer');
     const createThreadPage = document.getElementById('createPage');
-    const footer = document.querySelector('#footer');
+    const editThreadPage = document.getElementById('editPage');
     mainPage.classList.add('hidden');
     createThreadPage.classList.add('hidden');
+    editThreadPage.classList.add('hidden');
     loginPage.classList.remove('hidden');
-    // footer.classList.add('hidden');
-    // hideLoadingPage();
 }
+
 function showCreateThreadPage() {
     const mainPage = document.getElementById('mainContainer');
     const loginPage = document.getElementById('loginContainer');
     const createThreadPage = document.getElementById('createPage');
+    const editThreadPage = document.getElementById('editPage');
 
     mainPage.classList.add('hidden');
     loginPage.classList.add('hidden');
+    editThreadPage.classList.add('hidden');
     createThreadPage.classList.remove('hidden');
 }
+
+function showEditThreadPage() {
+    const mainPage = document.getElementById('mainContainer');
+    const loginPage = document.getElementById('loginContainer');
+    const createThreadPage = document.getElementById('createPage');
+    const editThreadPage = document.getElementById('editPage');
+
+    mainPage.classList.add('hidden');
+    loginPage.classList.add('hidden');
+    createThreadPage.classList.add('hidden');
+    editThreadPage.classList.remove('hidden');
+}
+
+
 
 loginButton.addEventListener('click', () => {
     location.hash = "#login";
@@ -123,6 +141,8 @@ window.addEventListener('hashchange', function () {
         showMainPage('home');
     } else if (pageHash === '#create') {
         showCreateThreadPage();
+    } else if (pageHash === '#edit') {
+        showEditThreadPage();
     } else {
         //load the target page
         const targetPage = pageHash.substring(1);
@@ -160,6 +180,8 @@ window.addEventListener('load', function () {
         showMainPage('home');
     } else if (window.location.hash === '#create') {
         showCreateThreadPage();
+    } else if (window.location.hash === '#edit') {
+        showEditThreadPage();
     } else {
         //load the target page
         const targetPage = window.location.hash.substring(1);
@@ -169,6 +191,7 @@ window.addEventListener('load', function () {
 
 logoutButton.addEventListener('click', () => {
     window.localStorage.removeItem('token');
+    window.localStorage.removeItem('userInfo');
     loginButton.classList.remove('hidden');
     logoutButton.classList.add('hidden');
     location.hash = "#login";

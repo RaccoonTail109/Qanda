@@ -3,6 +3,7 @@ export function toast(message, type) {
     var toastBody = toastContainer.querySelector(".toast-body");
     var closeButton = toastContainer.querySelector(".btn-close");
     console.log("entering toast");
+    toastContainer.classList.remove('hidden');
     toastBody.textContent = message;
 
     if (type === 'success') {
@@ -32,6 +33,7 @@ export function clearNode(node) {
 
 var createTitleTextarea = document.querySelector('.createThreadTitleInput');
 var createThreadContentInput = document.querySelector('.createThreadContentInput');
+
 createTitleTextarea.addEventListener('input', function () {
     this.style.height = 'auto';
     this.style.height = this.scrollHeight + 'px';
@@ -40,6 +42,7 @@ createThreadContentInput.addEventListener('input', function () {
     this.style.height = 'auto';
     this.style.height = this.scrollHeight + 'px';
 });
+
 
 export function getThreadId() {
     var hash = location.hash;
