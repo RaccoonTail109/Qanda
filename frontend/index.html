@@ -146,10 +146,10 @@
             </div>
         </section>
         <section id="createPage" class="fullPage hidden">
-            <div id="popToast" class="toast align-items-center text-bg-primary border-0 pageCenter" role="alert"
+            <div id="toastCreateError" class="toast align-items-center text-bg-danger border-0 pageCenter" role="alert"
                 aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
-                    <div class="toast-body">
+                    <div class="toast-body" id="toast-body-create-error">
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
                         aria-label="Close"></button>
@@ -192,10 +192,10 @@
             </div>
         </section>
         <section id="editPage" class="fullPage hidden">
-            <div id="popToast" class="toast align-items-center text-bg-primary border-0 pageCenter" role="alert"
+            <div id="toastEditError" class="toast align-items-center text-bg-danger border-0 pageCenter" role="alert"
                 aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
-                    <div class="toast-body">
+                    <div class="toast-body" id="toast-body-edit-error">
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
                         aria-label="Close"></button>
@@ -238,11 +238,19 @@
             </div>
         </section>
         <section id="mainContainer" class="fullPage">
-            <div id="cantChangeOtherAdmin" class="toast align-items-center text-bg-danger border-0 pageCenter"
-                role="alert" aria-live="assertive" aria-atomic="true">
+            <div id="toastSuccess" class="toast align-items-center text-bg-success border-0 pageCenter" role="alert"
+                aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body" id='toast-body-success'>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            <div id="toastAlert" class="toast align-items-center text-bg-danger border-0 pageCenter" role="alert"
+                aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body" id='toast-body'>
-                        You can NOT change anthor admin role.
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
                         aria-label="Close"></button>
@@ -262,6 +270,31 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-warning" id="confirmButton">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="commentReplyModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="commentReplyModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="commentReplyModalLabel">Reply to Comment</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                id="model-close-icon"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here"
+                                    id="commentReplyTextarea"></textarea>
+                                <label for="commentReplyTextarea">Comments</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="model-close-button" type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-warning" id="commentReplySaveButton">Save
+                                changes</button>
                         </div>
                     </div>
                 </div>
@@ -351,21 +384,7 @@
                         <div id="userPage" class="page hidden">
                             <div class="userContainer" id="userContainer">
                                 <div class="userInfoContainer">
-                                    <div class="userImg">
-                                        <img class="userAvatarImg" src="./styles/asset/profileImageSample.jpg"
-                                            alt="user avatar">
-                                    </div>
-                                    <div class="userTextInfo">
-                                        <div class="userName">James</div>
-                                        <div class="userEmail">
-                                            <img src="./styles/asset/email.svg" alt="email">
-                                            <div>123456@gmail.com</div>
-                                        </div>
-                                        <div class="editProfileContainer">
-                                            <img src="./styles/asset/EDIT_2.svg" alt="">
-                                            <div class="editProfileText">Edit Profile</div>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="userThreadContainer">
 

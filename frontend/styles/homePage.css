@@ -14,6 +14,8 @@
     width: 330px;
     margin-left: 10px;
     padding-right: 5px;
+    overflow-y: scroll;
+    max-height: calc(100vh - 60px);
 }
 
 .threadListElement {
@@ -423,4 +425,17 @@
     font-weight: 600;
     color: #F3F3F5;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.wholeComment {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+}
+
+.childrenContainer {
+    width: 100%;
+    padding-left: 20px;
 }

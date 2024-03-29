@@ -47,8 +47,12 @@ function EditThread() {
     const lock = window.__CurrentThreadDetails__.lock;
     console.log("window.__CurrentThreadDetails__.lock", window.__CurrentThreadDetails__.lock);
     if (title.length === 0 || content.length === 0) {
-        toast('Please fill in all fields to create', 'info');
-        alert('Please fill in all fields to create');
+        const toast = new bootstrap.Toast(toastEditError, {
+            delay: 2000,
+        });
+        const toastBody = document.getElementById('toast-body-edit-error');
+        toastBody.textContent = 'Title or content cannot be empty.';
+        toast.show();
         return;
     }
     const data = {
@@ -60,5 +64,11 @@ function EditThread() {
     }
 
     requestFunc.updateThread(data);
+    const toast = new bootstrap.Toast(toastSuccess, {
+        delay: 2000,
+    });
+    const toastBody = document.getElementById('toast-body-success');
+    toastBody.textContent = 'Thread updated successfully.';
+    toast.show();
 }
 submitEditThreadButton.addEventListener('click', EditThread);

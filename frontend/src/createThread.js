@@ -26,8 +26,20 @@ function submitThread() {
     const content = createThreadContentInput.value;
     const isPublic = publicThreadCheckbox.checked;
     if (title.length === 0) {
-        toast('Please fill in all fields to create', 'error');
-        // alert('Please fill in all fields to create');
+        const toast = new bootstrap.Toast(toastCreateError, {
+            delay: 2000,
+        });
+        const toastBody = document.getElementById('toast-body-create-error');
+        toastBody.textContent = 'Title cannot be empty.';
+        toast.show();
+        return;
+    } else if (content.length === 0) {
+        const toast = new bootstrap.Toast(toastCreateError, {
+            delay: 2000,
+        });
+        const toastBody = document.getElementById('toast-body-create-error');
+        toastBody.textContent = 'Content cannot be empty.';
+        toast.show();
         return;
     }
     const data = {
@@ -37,5 +49,11 @@ function submitThread() {
     }
 
     requestFunc.submitCreatedThread(data);
+    const toast = new bootstrap.Toast(toastSuccess, {
+        delay: 2000,
+    });
+    const toastBody = document.getElementById('toast-body-success');
+    toastBody.textContent = 'Thread created successfully.';
+    toast.show();
 }
 submitThreadButton.addEventListener('click', submitThread);

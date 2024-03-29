@@ -122,7 +122,11 @@ export function renderProfilePage(userDetails) {
                     };
                 } else if (userDetails.admin === true) {
                     //todo: can't change another admin role
-                    const toast = new bootstrap.Toast(cantChangeOtherAdmin);
+                    const toast = new bootstrap.Toast(toastAlert, {
+                        delay: 2000,
+                    });
+                    const toastBody = document.getElementById('toast-body');
+                    toastBody.textContent = 'You can NOT change anthor admin role.';
                     toast.show();
                     return;
                 } else {
@@ -145,16 +149,10 @@ export function renderProfilePage(userDetails) {
         userNameRow.appendChild(userRole);
     }
 
-
-
-
-
     const email = document.createElement('div');
     email.classList.add('userEmail');
     email.textContent = userDetails.email;
     userTextInfo.appendChild(email);
-
-
 
     if (userDetails.id === userInfo.id) {
         const editProfileContainer = document.createElement('div');
@@ -285,16 +283,34 @@ export function renderProfilePage(userDetails) {
                 const updatedEmail = document.getElementById('updatedEmail').value;
                 const updatedPassword = document.getElementById('updatedPassword').value;
 
+                const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
                 console.log('Updated User Name:', updatedUserName);
                 console.log('Updated Email:', updatedEmail);
                 console.log('Updated Password:', updatedPassword);
                 if (updatedEmail === '' || updatedPassword === '' || updatedUserName === '') {
-                    toast('Please fill out all fields', 'error');
-                    alert('Please fill out all fields');
+                    const toast = new bootstrap.Toast(toastAlert, {
+                        delay: 2000,
+                    });
+                    const toastBody = document.getElementById('toast-body');
+                    toastBody.textContent = 'Please fill out all fields.';
+                    toast.show();
                     return;
-                } else if (updatedEmail === userDetails.email || updatedUserName === userDetails.name || userImgUrl === userDetails.image) {
-                    toast('Please update all information', 'error');
-                    alert('Please update all information');
+                } else if (updatedEmail === userDetails.email || updatedUserName === userDetails.name || (userImgUrl === userDetails.image && userImgUrl !== 'null' && userDetails.image !== 'null')) {
+                    const toast = new bootstrap.Toast(toastAlert, {
+                        delay: 2000,
+                    });
+                    const toastBody = document.getElementById('toast-body');
+                    toastBody.textContent = 'Can not use the same information.';
+                    toast.show();
+                    return;
+                } else if (!emailPattern.test(updatedEmail)) {
+                    const toast = new bootstrap.Toast(toastAlert, {
+                        delay: 2000,
+                    });
+                    const toastBody = document.getElementById('toast-body');
+                    toastBody.textContent = 'Please enter a valid email address.';
+                    toast.show();
                     return;
                 }
 
@@ -318,11 +334,49 @@ export function renderProfilePage(userDetails) {
                                 renderProfilePage(newUserDetails);
                                 userInfoContainer.classList.remove('hidden');
                                 editProfileContainer.classList.add('hidden');
-                            })
-                    })
-
+                                const toast = new bootstrap.Toast(toastSuccess, {
+                                    delay: 2000,
+                                });
+                                const toastBody = document.getElementById('toast-body-success');
+                                toastBody.textContent = 'Edit success.';
+                                toast.show();
+                            });
+                    });
             });
-
         });
     }
+    renderProfileThread(window.__ThreadDetails__, userDetails.id);
+}
+
+function renderProfileThread(threadsDetails, userId) {
+    // console.log('threadsDetails:', threadsDetails);
+    // console.log('userId:', userId);
+    const userContainer = document.getElementById('userContainer');
+    userContainer.classList.add('userContainer');
+
+    const userThreadContainer = document.createElement('div');
+    userThreadContainer.classList.add('userThreadContainer');
+
+    const userThreads = threadsDetails.filter(thread => thread.creatorId === userId);
+    userThreads.forEach(thread => {
+        const threadElement = document.createElement('div');
+        threadElement.classList.add('userThreadItem');
+
+        const titleElement = document.createElement('h3');
+        titleElement.classList.add('userThreadTitle');
+        titleElement.textContent = thread.title;
+
+        const contentElement = document.createElement('p');
+        contentElement.classList.add('userThreadContent');
+        const content = thread.content
+        contentElement.textContent = content;
+
+        threadElement.appendChild(titleElement);
+        threadElement.appendChild(contentElement);
+
+        userThreadContainer.appendChild(threadElement);
+
+        userContainer.appendChild(userThreadContainer);
+        console.log('completed rendering user thread.');
+    });
 }

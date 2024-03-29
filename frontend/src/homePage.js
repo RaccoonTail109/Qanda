@@ -2,6 +2,13 @@ import { clearNode, toast } from './utilities.js';
 import { requestFunc } from './request.js';
 import { renderEditedDetails } from './editThread.js';
 
+const commentReplyModal = document.getElementById('commentReplyModal');
+const commentReplyTextarea = document.getElementById('commentReplyTextarea')
+const modelCloseIcon = document.getElementById('model-close-icon');
+const modelCloseButton = document.getElementById('model-close-button');
+
+const modal = new bootstrap.Modal(commentReplyModal);
+
 export function getModifiedThreadsDetails(threadsDetails) {
     const creatorIds = threadsDetails.map((thread) => thread.creatorId);
     const userDetailsPromises = creatorIds.map((creatorId) => requestFunc.getUserDetails(creatorId));
@@ -180,7 +187,6 @@ export function renderThreadContent(threadId) {
                     } else {
                         window.__ThreadDetails__.find(thread => thread.id === data.id).likes = threadDetails.likes.filter(id => id !== userId);
                     }
-                    //todo: 点赞之后重新渲染threadList,但是目前这么写有bug，当点击like后，threadList会重新渲染，但是会增加一个Element，而不是替换原来的Element
                     clearNode(document.querySelector('.threadListContainer'));
                     renderThreadsList(window.__ThreadDetails__, document.querySelector('.threadListContainer'));
                     console.log('threadDetail1212:', window.__ThreadDetails__);
@@ -188,41 +194,6 @@ export function renderThreadContent(threadId) {
                 })
         })
 
-        const commentButton = document.createElement('div');
-        commentButton.classList.add('threadContentComment');
-        const commentImg = document.createElement('img');
-        commentImg.classList.add('commentImg');
-        commentImg.src = './styles/asset/submit.svg';
-        commentImg.alt = 'comment';
-
-        commentButton.appendChild(commentImg);
-        const commentInput = document.createElement('input');
-        commentInput.classList.add('commentInput');
-        commentInput.classList.add('commentInput');
-        commentInput.placeholder = 'Add a comment...';
-        commentInput.id = 'commentInput';
-        commentButton.appendChild(commentInput);
-
-        commentImg.addEventListener('click', () => {
-            console.log('commentImg clicked');
-            const commentContent = commentInput.value;
-            if (commentContent.length === 0) {
-                toast('Comment can not be empty', 'error');
-                return;
-            }
-            const data = {
-                content: commentContent,
-                threadId: threadDetails.id,
-                parentCommentId: null,
-            }
-            requestFunc.createNewComment(data)
-                .then((data) => {
-                    // console.log('comment success:', data);
-                    toast('Comment success', 'success');
-                    commentInput.value = '';
-                    renderCommentList(threadId);
-                })
-        });
 
         const watchButton = document.createElement('button');
         watchButton.classList.add('threadContentOperator');
@@ -258,11 +229,59 @@ export function renderThreadContent(threadId) {
                     renderThreadContent(threadId);
                 })
         });
+        requestFunc.getComments(threadId)
+            .then((comments) => {
+                if (comments.length === 0) {
+                    const commentButton = document.createElement('div');
+                    commentButton.classList.add('threadContentComment');
+                    const commentImg = document.createElement('img');
+                    commentImg.classList.add('commentImg');
+                    commentImg.src = './styles/asset/submit.svg';
+                    commentImg.alt = 'comment';
 
+                    commentButton.appendChild(commentImg);
+                    const commentInput = document.createElement('input');
+                    commentInput.classList.add('commentInput');
+                    commentInput.classList.add('commentInput');
+                    commentInput.placeholder = 'Add a comment...';
+                    commentInput.id = 'commentInput';
+                    commentButton.appendChild(commentInput);
+                    operatorContainer.appendChild(commentButton);
+
+                    commentImg.addEventListener('click', () => {
+                        // console.log('commentImg clicked');
+                        const commentContent = commentInput.value;
+                        if (commentContent.length === 0) {
+                            const toast = new bootstrap.Toast(toastAlert, {
+                                delay: 2000,
+                            });
+                            const toastBody = document.getElementById('toast-body');
+                            toastBody.textContent = 'Comment can not be empty.';
+                            toast.show();
+                            return;
+                        }
+                        const data = {
+                            content: commentContent,
+                            threadId: threadDetails.id,
+                            parentCommentId: null,
+                        }
+                        requestFunc.createNewComment(data)
+                            .then((data) => {
+                                // console.log('comment success:', data);
+                                const toast = new bootstrap.Toast(toastSuccess, {
+                                    delay: 2000,
+                                });
+                                const toastBody = document.getElementById('toast-body-success');
+                                toastBody.textContent = 'Comment sent.';
+                                toast.show();
+                                commentInput.value = '';
+                                renderThreadContent(threadId);
+                            })
+                    });
+                }
+            })
         operatorRightContainer.appendChild(likeButton);
         operatorRightContainer.appendChild(watchButton);
-
-        operatorContainer.appendChild(commentButton);
         operatorContainer.appendChild(operatorRightContainer);
 
         threadInfoRow.appendChild(threadInfoLeft);
@@ -308,7 +327,12 @@ export function renderThreadContent(threadId) {
                         window.__ThreadDetails__ = window.__ThreadDetails__.filter(thread => thread.id !== data.id);
                         renderEmptyThreadContent();
                         location.hash = '#home';
-                        toast('Delete success', 'success');
+                        const toast = new bootstrap.Toast(toastSuccess, {
+                            delay: 2000,
+                        });
+                        const toastBody = document.getElementById('toast-body-success');
+                        toastBody.textContent = 'Comment deleted.';
+                        toast.show();
                     })
                     .catch(error => {
                         toast(error, 'error');
@@ -358,6 +382,18 @@ export function renderEmptyThreadContent() {
 
 }
 
+function showCommentModel(commentId) {
+    window.__currrentCommentId__ = commentId;
+    modal.show();
+    commentReplyTextarea.value = '';
+}
+
+function hideCommentModel() {
+    window.__currrentCommentId__ = null;
+    modal.hide();
+    commentReplyTextarea.value = '';
+}
+
 function renderCommentList(threadId) {
     requestFunc.getComments(threadId)
         .then((comments) => {
@@ -377,17 +413,46 @@ function renderCommentList(threadId) {
                     commentListTitle.textContent = 'Comments';
                     commentListContainer.appendChild(commentListTitle);
 
+                    let commentCreator = "";
+                    const userInfoString = localStorage.getItem('userInfo');
+                    const userInfo = JSON.parse(userInfoString);
+
                     Promise.all(userDetailPromises)
                         .then((userDetails) => {
                             comments.forEach((comment) => {
-                                const userInfoString = localStorage.getItem('userInfo');
-                                const userInfo = JSON.parse(userInfoString);
                                 // console.log('current comment:', comment);
-                                const commentCreator = userDetails.find((user) => user.id === comment.creatorId);
-                                // console.log('commentCreator:', commentCreator);
+                                commentCreator = userDetails.find((user) => user.id === comment.creatorId);
+                                console.log('commentCreator:', commentCreator);
+                            });
+                            console.log('comments11:', comments);
+                            const newComments = comments.reduce((acc, comment) => {
+                                if (comment.parentCommentId !== null) {
+                                    const parentComment = acc.find((c) => c.id === comment.parentCommentId);
+                                    if (parentComment) {
+                                        if (!parentComment.children) {
+                                            parentComment.children = [];
+                                        }
+                                        parentComment.children.push(comment);
+                                    }
+                                } else {
+                                    acc.push(comment);
+                                }
+                                return acc;
+                            }, []);
+                            console.log('newComments', newComments);
+
+
+                            newComments.forEach((comment) => {
+
+                                const wholeComment = document.createElement('div');
+                                wholeComment.classList.add('wholeComment');
+                                commentListContainer.appendChild(wholeComment);
+
                                 const commentElement = document.createElement('div');
                                 commentElement.classList.add('commentElement');
-                                commentListContainer.appendChild(commentElement);
+                                wholeComment.appendChild(commentElement);
+
+
 
                                 const commentElementLeft = document.createElement('div');
                                 commentElementLeft.classList.add('commentElementLeft');
@@ -395,7 +460,7 @@ function renderCommentList(threadId) {
 
                                 const avatar = document.createElement('img');
                                 avatar.classList.add('avatar');
-                                //todo:加上如果img为空的话显示默认头像 done
+                                //todo: if the user has no avatar, use the default avatar done
                                 if (!commentCreator.image || commentCreator.image === 'null') {
                                     avatar.src = './styles/asset/avatar.svg';
                                     avatar.alt = 'avatar';
@@ -438,6 +503,52 @@ function renderCommentList(threadId) {
                                 commentReply.textContent = 'Reply';
                                 commentOperator.appendChild(commentReply);
 
+                                const commentReplySaveButton = document.getElementById('commentReplySaveButton');
+
+                                commentReply.addEventListener('click', () => {
+                                    showCommentModel(comment.id);
+                                    console.log('commentId:', window.__currrentCommentId__);
+
+                                    modelCloseButton.addEventListener('click', () => {
+                                        hideCommentModel();
+                                    });
+                                    modelCloseIcon.addEventListener('click', () => {
+                                        hideCommentModel();
+                                    });
+
+                                    commentReplySaveButton.addEventListener('click', () => {
+                                        const replyContent = commentReplyTextarea.value;
+                                        if (replyContent.length === 0) {
+                                            const toast = new bootstrap.Toast(toastAlert, {
+                                                delay: 2000,
+                                            });
+                                            const toastBody = document.getElementById('toast-body');
+                                            toastBody.textContent = 'Reply can not be empty.';
+                                            toast.show();
+                                            return;
+                                        } else {
+                                            const data = {
+                                                content: replyContent,
+                                                threadId: threadId,
+                                                parentCommentId: window.__currrentCommentId__,
+                                            }
+                                            console.log('reply data:', data);
+                                            requestFunc.createNewComment(data)
+                                                .then(() => {
+                                                    const toast = new bootstrap.Toast(toastSuccess, {
+                                                        delay: 2000,
+                                                    });
+                                                    const toastBody = document.getElementById('toast-body-success');
+                                                    toastBody.textContent = 'Reply sent.';
+                                                    toast.show();
+                                                    renderCommentList(threadId);
+                                                    hideCommentModel();
+                                                })
+                                        }
+                                    })
+
+                                })
+
                                 if (userInfo.id === comment.creatorId || userInfo.admin === true) {
                                     const commentEdit = document.createElement('div');
                                     commentEdit.classList.add('commentEdit');
@@ -477,7 +588,12 @@ function renderCommentList(threadId) {
                                     commentEditSubmit.addEventListener('click', () => {
                                         const commentContent = commentEditInput.value;
                                         if (commentContent.length === 0) {
-                                            toast('Comment can not be empty', 'error');
+                                            const toast = new bootstrap.Toast(toastAlert, {
+                                                delay: 2000,
+                                            });
+                                            const toastBody = document.getElementById('toast-body');
+                                            toastBody.textContent = 'Comment can not be empty.';
+                                            toast.show();
                                             return;
                                         }
                                         const data = {
@@ -486,45 +602,16 @@ function renderCommentList(threadId) {
                                         }
                                         requestFunc.editComment(data)
                                             .then(() => {
-                                                toast('Edit success', 'success');
+                                                const toast = new bootstrap.Toast(toastSuccess, {
+                                                    delay: 2000,
+                                                });
+                                                const toastBody = document.getElementById('toast-body-success');
+                                                toastBody.textContent = 'Edit success.';
+                                                toast.show();
                                                 renderCommentList(threadId);
                                             })
                                     })
                                 }
-
-                                const commentReplyInputRow = document.createElement('div');
-                                commentReplyInputRow.classList.add('commentReplyInputRow');
-                                commentReplyInputRow.classList.add('hidden');
-                                commentElementDetail.appendChild(commentReplyInputRow);
-
-                                const commentReplyInput = document.createElement('textarea');
-                                commentReplyInput.classList.add('commentReplyInput');
-                                commentReplyInput.placeholder = `Reply @${commentCreator.name}:`;
-                                commentReplyInput.id = 'commentReplyInput';
-
-                                const commentReplySubmit = document.createElement('img');
-                                commentReplySubmit.classList.add('commentReplySubmit');
-                                commentReplySubmit.src = './styles/asset/submit.svg';
-                                commentReplySubmit.alt = 'reply submit';
-
-                                commentReplyInputRow.appendChild(commentReplySubmit);
-                                commentReplyInputRow.appendChild(commentReplyInput);
-
-
-
-                                var showInput = false;
-
-                                commentReply.addEventListener('click', () => {
-                                    console.log('commentReply clicked');
-                                    if (showInput === false) {
-                                        commentReplyInputRow.classList.remove('hidden');
-                                        commentReplyInput.focus();
-                                        showInput = true;
-                                    } else {
-                                        commentReplyInputRow.classList.add('hidden');
-                                        showInput = false;
-                                    }
-                                })
 
 
                                 const commentElementRight = document.createElement('div');
@@ -541,7 +628,7 @@ function renderCommentList(threadId) {
                                 commentLikeIcon.alt = comment.likes.includes(Number(userInfo.id))
                                     ? 'unlike'
                                     : 'like';
-                                //todo:加上点赞功能，和点赞数，还有点赞的图标的切换 done
+                                //todo: add like function done
                                 commentLikeIcon.addEventListener('click', () => {
                                     const turnon = comment.likes.includes(Number(userInfo.id)) ? false : true;
                                     const data = {
@@ -556,7 +643,7 @@ function renderCommentList(threadId) {
                                             } else {
                                                 comment.likes = comment.likes.filter(id => id !== userId);
                                             }
-                                            renderCommentList(threadId);
+                                            renderThreadContent(threadId);
                                         })
                                 });
 
@@ -568,7 +655,7 @@ function renderCommentList(threadId) {
                                 commentLikeContainer.appendChild(commentLikeNber);
                                 commentElementRight.appendChild(commentLikeContainer);
 
-                                //todo:如果是自己的评论，可以删除 done
+                                //todo: if the comment is created by the current user, add a delete button done
                                 if (userInfo.id === comment.creatorId || userInfo.admin === true) {
                                     const commentDelete = document.createElement('img');
                                     commentDelete.classList.add('commentDelete');
@@ -581,13 +668,107 @@ function renderCommentList(threadId) {
                                         }
                                         requestFunc.deleteComment(data)
                                             .then(() => {
-                                                toast('Delete success', 'success');
-                                                renderCommentList(threadId);
+                                                const toast = new bootstrap.Toast(toastSuccess, {
+                                                    delay: 2000,
+                                                });
+                                                const toastBody = document.getElementById('toast-body-success');
+                                                toastBody.textContent = 'Comment deleted success.';
+                                                toast.show();
+                                                //!
+                                                renderThreadContent(threadId);
                                             })
                                     });
                                 }
+                                if (comment.children && comment.children.length > 0) {
+                                    const childrenContainer = document.createElement('div');
+                                    childrenContainer.classList.add('childrenContainer');
+                                    wholeComment.appendChild(childrenContainer);
+                                    comment.children.forEach((child) => {
+                                        const childElement = document.createElement('div');
+                                        childElement.classList.add('commentElement', 'childComment');
+                                        childrenContainer.appendChild(childElement);
 
+                                        const childElementLeft = document.createElement('div');
+                                        childElementLeft.classList.add('commentElementLeft');
+                                        childElement.appendChild(childElementLeft);
 
+                                        const childAvatar = document.createElement('img');
+                                        childAvatar.classList.add('avatar');
+                                        const childCommentCreator = userDetails.find((user) => user.id === child.creatorId);
+                                        if (!childCommentCreator.image || childCommentCreator.image === 'null') {
+                                            childAvatar.src = './styles/asset/avatar.svg';
+                                            childAvatar.alt = 'avatar';
+                                        } else {
+                                            childAvatar.src = childCommentCreator.image;
+                                            childAvatar.alt = 'avatar';
+                                        }
+                                        childElementLeft.appendChild(childAvatar);
+
+                                        const childElementDetail = document.createElement('div');
+                                        childElementDetail.classList.add('commentElementDetail');
+                                        childElementLeft.appendChild(childElementDetail);
+
+                                        const childAuthor = document.createElement('div');
+                                        childAuthor.classList.add('commentAuthor');
+                                        childAuthor.textContent = childCommentCreator.name;
+                                        childElementDetail.appendChild(childAuthor);
+
+                                        const childContent = document.createElement('div');
+                                        childContent.classList.add('commentContent');
+                                        childContent.textContent = child.content;
+                                        childElementDetail.appendChild(childContent);
+
+                                        const childDetailUpperRow = document.createElement('div');
+                                        childDetailUpperRow.classList.add('commentDetailUpperRow');
+                                        childElementDetail.appendChild(childDetailUpperRow);
+
+                                        const childTime = document.createElement('div');
+                                        childTime.classList.add('commentTime');
+                                        childTime.textContent = new Date(child.createdAt).toLocaleString();
+                                        childDetailUpperRow.appendChild(childTime);
+
+                                        const childElementRight = document.createElement('div');
+                                        childElementRight.classList.add('commentElementRight');
+                                        childElement.appendChild(childElementRight);
+
+                                        const childLikeContainer = document.createElement('div');
+                                        childLikeContainer.classList.add('commentLikeContainer');
+                                        const childLikeIcon = document.createElement('img');
+                                        childLikeIcon.classList.add('commentLikeIcon');
+                                        childLikeIcon.src = child.likes.includes(Number(userInfo.id))
+                                            ? './styles/asset/like_fill.svg'
+                                            : './styles/asset/like_empty.svg';
+                                        childLikeIcon.alt = child.likes.includes(Number(userInfo.id))
+                                            ? 'unlike'
+                                            : 'like';
+                                        childLikeIcon.addEventListener('click', () => {
+                                            const turnon = child.likes.includes(Number(userInfo.id)) ? false : true;
+                                            const data = {
+                                                id: child.id,
+                                                turnon,
+                                            }
+                                            requestFunc.likeComment(data)
+                                                .then(() => {
+                                                    const userId = userInfo.id;
+                                                    if (turnon) {
+                                                        child.likes.push(userId);
+                                                    } else {
+                                                        child.likes = child.likes.filter(id => id !== userId);
+                                                    }
+                                                    renderThreadContent(threadId);
+                                                })
+                                        });
+
+                                        const childLikeNumber = document.createElement('div');
+                                        childLikeNumber.classList.add('commentLikeNber');
+                                        childLikeNumber.textContent = child.likes?.length || 0;
+
+                                        childLikeContainer.appendChild(childLikeIcon);
+                                        childLikeContainer.appendChild(childLikeNumber);
+                                        childElementRight.appendChild(childLikeContainer);
+
+                                    })
+                                }
                             });
                         });
                 }

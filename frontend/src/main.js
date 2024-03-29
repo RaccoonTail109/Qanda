@@ -52,11 +52,9 @@ function showMainPage(targetPage) {
                 getModifiedThreadsDetails(threadsDetails)
                     .then(() => {
                         renderThreadsList(window.__ThreadDetails__, threadListContainer);
-
                         const threadIdDict = getHashId();
                         // console.log(threadIdDict);
                         const threadId = threadIdDict?.threadId;
-
                         if (threadId) {
                             renderThreadContent(threadId);
                         } else {
@@ -65,7 +63,7 @@ function showMainPage(targetPage) {
                     })
             });
     } else if (pageName === 'user') {
-        const userId = getHashId()?.userId;
+        var userId = getHashId()?.userId;
         if (userId) {
             requestFunc.getUserDetails(userId)
                 .then((userDetails) => {
@@ -76,8 +74,12 @@ function showMainPage(targetPage) {
             const userInfoString = window.localStorage.getItem('userInfo');
             const userInfo = JSON.parse(userInfoString);
             location.hash = `#user?userId=${userInfo.id}`;
+            userId = userInfo.id;
             renderProfilePage(userInfo);
         }
+        // console.log('1234', window.__ThreadDetails__);
+        // console.log('12345', userId);
+
 
     }
 }
