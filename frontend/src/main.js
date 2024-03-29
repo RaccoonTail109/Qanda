@@ -1,15 +1,16 @@
 import { BACKEND_PORT } from './config.js';
 // A helper you may want to use when uploading new images to the server.
 import { fileToDataUrl } from './helpers.js';
-import { clearNode, toast, getThreadId } from './utilities.js';
+import { clearNode, toast, getHashId } from './utilities.js';
 import { requestFunc } from './request.js';
 import { getModifiedThreadsDetails, renderThreadsList, renderThreadContent, renderEmptyThreadContent } from './homePage.js';
+import { renderProfilePage } from './profilePage.js';
 
 const loginButton = document.getElementById('loginButtonMain');
 const logoutButton = document.getElementById('logoutButton');
 const homeSideNav = document.getElementById('homeSideNav');
 // const threadSideNav = document.getElementById('threadSideNav');
-const profileSideNav = document.getElementById('userSideNav');
+const userSideNav = document.getElementById('userSideNav');
 const createThreadButton = document.getElementById('createThreadIconButton');
 const createComeBackButton = document.getElementById("createComeBackButton");
 
@@ -52,7 +53,7 @@ function showMainPage(targetPage) {
                     .then(() => {
                         renderThreadsList(window.__ThreadDetails__, threadListContainer);
 
-                        const threadIdDict = getThreadId();
+                        const threadIdDict = getHashId();
                         // console.log(threadIdDict);
                         const threadId = threadIdDict?.threadId;
 
@@ -63,6 +64,21 @@ function showMainPage(targetPage) {
                         }
                     })
             });
+    } else if (pageName === 'user') {
+        const userId = getHashId()?.userId;
+        if (userId) {
+            requestFunc.getUserDetails(userId)
+                .then((userDetails) => {
+                    console.log('userDetail123:', userDetails);
+                    renderProfilePage(userDetails);
+                });
+        } else {
+            const userInfoString = window.localStorage.getItem('userInfo');
+            const userInfo = JSON.parse(userInfoString);
+            location.hash = `#user?userId=${userInfo.id}`;
+            renderProfilePage(userInfo);
+        }
+
     }
 }
 

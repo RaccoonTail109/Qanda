@@ -1,4 +1,4 @@
-import { clearNode, getThreadId, toast } from './utilities.js';
+import { clearNode, toast } from './utilities.js';
 import { requestFunc } from './request.js';
 import { renderEditedDetails } from './editThread.js';
 
@@ -26,7 +26,14 @@ export function renderThreadsList(threadsDetails, threadListContainer) {
         threadListElement.classList.add('threadListElement');
         threadListElement.classList.remove('active')
 
-        threadListElement.addEventListener('click', () => {
+        const threadTitleRow = document.createElement('div');
+        threadTitleRow.classList.add('threadTitleRow');
+
+        const threadListTitle = document.createElement('div');
+        threadListTitle.classList.add('threadListTitle');
+        threadListTitle.textContent = thread.title;
+
+        threadListTitle.addEventListener('click', () => {
             const threadId = thread.id;
             history.pushState(null, null, `#home?threadId=${threadId}`);
             renderThreadContent(threadId);
@@ -36,13 +43,6 @@ export function renderThreadsList(threadsDetails, threadListContainer) {
             });
             threadListElement.classList.add('selected');
         });
-
-        const threadTitleRow = document.createElement('div');
-        threadTitleRow.classList.add('threadTitleRow');
-
-        const threadListTitle = document.createElement('div');
-        threadListTitle.classList.add('threadListTitle');
-        threadListTitle.textContent = thread.title;
 
         const threadLikeIcon = document.createElement('div');
         threadLikeIcon.classList.add('threadLikeIcon');
@@ -57,9 +57,13 @@ export function renderThreadsList(threadsDetails, threadListContainer) {
         const threadListFooter = document.createElement('div');
         threadListFooter.classList.add('threadListFooter');
 
-        const threadAuthor = document.createElement('p');
+        const threadAuthor = document.createElement('a');
         threadAuthor.classList.add('threadAuthor');
         threadAuthor.textContent = thread.creator.name;
+
+        threadAuthor.addEventListener('click', () => {
+            window.location.hash = `#user?userId=${thread.creator.id}`;
+        });
 
         const threadTime = document.createElement('p');
         threadTime.classList.add('threadTime');
@@ -102,8 +106,7 @@ export function renderThreadContent(threadId) {
     };
 
     if (threadDetails) {
-        console.log('threadDetails:', threadDetails);
-
+        // console.log('threadDetails:', threadDetails);
         const threadContentTitle = document.createElement('div');
         threadContentTitle.classList.add('threadContentTitle');
         threadContentTitle.textContent = threadDetails.title;
@@ -379,9 +382,9 @@ function renderCommentList(threadId) {
                             comments.forEach((comment) => {
                                 const userInfoString = localStorage.getItem('userInfo');
                                 const userInfo = JSON.parse(userInfoString);
-                                console.log('current comment:', comment);
+                                // console.log('current comment:', comment);
                                 const commentCreator = userDetails.find((user) => user.id === comment.creatorId);
-                                console.log('commentCreator:', commentCreator);
+                                // console.log('commentCreator:', commentCreator);
                                 const commentElement = document.createElement('div');
                                 commentElement.classList.add('commentElement');
                                 commentListContainer.appendChild(commentElement);
@@ -393,7 +396,7 @@ function renderCommentList(threadId) {
                                 const avatar = document.createElement('img');
                                 avatar.classList.add('avatar');
                                 //todo:加上如果img为空的话显示默认头像 done
-                                if (!commentCreator.image) {
+                                if (!commentCreator.image || commentCreator.image === 'null') {
                                     avatar.src = './styles/asset/avatar.svg';
                                     avatar.alt = 'avatar';
                                 } else {

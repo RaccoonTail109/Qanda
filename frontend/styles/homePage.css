@@ -11,12 +11,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 350px;
-    margin-left: 20px;
+    width: 330px;
+    margin-left: 10px;
+    padding-right: 5px;
 }
 
 .threadListElement {
-    padding-left: 14px;
+    padding-left: 9px;
     padding-right: 7px;
     width: 100%;
     height: 70px;
@@ -69,7 +70,8 @@
 .threadTime {
     margin: 0;
     font-size: 15px;
-    color: #A5A4A1
+    color: #A5A4A1;
+    z-index: 20;
 }
 
 .listLikeNumber {
@@ -83,9 +85,10 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    padding-left: 60px;
+    padding-left: 40px;
     padding-top: 20px;
-    padding-right: 50px;
+    padding-right: 30px;
+    border-left: #1F2021 1px dashed;
 }
 
 .threadContentTitle {
@@ -283,7 +286,7 @@
     align-items: start;
     margin-top: 10px;
     margin-bottom: 3px;
-    border-bottom: #1F2021 1px solid;
+    border-bottom: #AAA9A7 1px solid;
     width: 100%;
     margin-left: 5px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

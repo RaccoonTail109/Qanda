@@ -88,5 +88,4 @@ function showAlert() {
 forgetPasswordButton.addEventListener('click', (event) => {
     showAlert();
     event.preventDefault();
-
 });

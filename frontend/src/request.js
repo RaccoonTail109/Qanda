@@ -87,8 +87,35 @@ const requestFunc = {
     deleteComment: deleteComment,
     likeComment: likeComment,
     editComment: editComment,
+    updateUserInfo: updateUserInfo,
+    updateUserAdmin: updateUserAdmin,
 }
 
+function updateUserAdmin(data) {
+    return http.put('/user/admin', data)
+        .then(response => {
+            if (response.error) {
+                throw new Error(response.error);
+            } else {
+                console.log('user admin updated:', response);
+                toast('User admin updated', 'success');
+            }
+        }).catch(error => { toast(error, 'error') })
+
+}
+
+function updateUserInfo(data) {
+    return http.put('/user', data)
+        .then(response => {
+            if (response.error) {
+                throw new Error(response.error);
+            } else {
+                console.log('user info updated:', response);
+                toast('User info updated', 'success');
+            }
+        }).catch(error => { toast(error, 'error') })
+
+}
 function editComment(data) {
     return http.put('/comment', data)
         .then(response => {
